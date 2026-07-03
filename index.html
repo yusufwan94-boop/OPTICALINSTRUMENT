@@ -1,0 +1,1355 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OptiSains Simulator - KSSM Physics Form 4</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;600;700&display=swap');
+    
+    body {
+      font-family: 'Quicksand', sans-serif;
+      touch-action: manipulation; /* Prevents double-tap zooming delay */
+    }
+    .title-font {
+      font-family: 'Fredoka One', cursive;
+    }
+    /* Mobile-optimized, touch-friendly range slider thumb */
+    input[type="range"]::-webkit-slider-thumb {
+      background: #ec4899;
+      border: 3px solid #ffffff;
+      border-radius: 9999px;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      -webkit-appearance: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    input[type="range"]::-webkit-slider-thumb:active {
+      transform: scale(0.9);
+      background: #db2777;
+    }
+    input[type="range"]::-moz-range-thumb {
+      background: #ec4899;
+      border: 3px solid #ffffff;
+      border-radius: 9999px;
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s ease;
+    }
+    input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.15);
+    }
+    input[type="range"]::-moz-range-thumb:active {
+      transform: scale(0.9);
+      background: #db2777;
+    }
+    .glow-effect {
+      animation: soft-glow 2s infinite alternate;
+    }
+    @keyframes soft-glow {
+      0% { filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4)); }
+      100% { filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8)); }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 text-slate-800 pb-12 min-h-screen">
+
+  <!-- TOP BILINGUAL NAVBAR -->
+  <header class="bg-white border-b-4 border-yellow-300 shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3 text-center md:text-left flex-col md:flex-row">
+        <!-- Playful Sun Logo (Pure inline CSS/SVG) -->
+        <div class="bg-gradient-to-tr from-yellow-400 to-pink-500 p-2.5 rounded-2xl shadow-lg text-white transform rotate-3">
+          <svg class="w-8 h-8 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-indigo-950 flex items-center justify-center md:justify-start gap-2 title-font">
+            <span id="header-title">OptiSains Simulator</span> <span class="text-pink-500">⚡</span>
+          </h1>
+          <p class="text-xs sm:text-sm font-bold text-purple-600" id="header-subtitle">KSSM Physics Form 4: Light & Optics</p>
+        </div>
+      </div>
+      
+      <!-- Bilingual Switch Button -->
+      <button onclick="toggleLanguage()" class="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-indigo-950 font-black px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all text-sm border-2 border-white">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 0A18.015 18.015 0 0110 14.582M6.412 9a18.423 18.423 0 001.326 5.57m0 0a17.21 17.21 0 01-3.608-2.194m3.608 2.194L10 18.25m4.5-9.25a18.28 18.28 0 01-1.326 5.57" />
+        </svg>
+        <span id="lang-btn-text">Bahasa Melayu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="max-w-6xl mx-auto px-4 mt-6">
+    
+    <!-- STYLISH TAB NAVIGATION (KSSM CHAPTER 6 TOPICS) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-6">
+      <button onclick="switchTab('refraction')" id="tab-refraction" class="tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-indigo-950 bg-gradient-to-br from-blue-400 to-cyan-400 text-white shadow-xl scale-102">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        <span class="font-extrabold text-xs sm:text-sm text-center" id="nav-refraction">Glass Block</span>
+      </button>
+      
+      <button onclick="switchTab('tir')" id="tab-tir" class="tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-transparent bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span class="font-extrabold text-xs sm:text-sm text-center" id="nav-tir">Total Internal Reflection</span>
+      </button>
+
+      <button onclick="switchTab('lenses')" id="tab-lenses" class="tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-transparent bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        </svg>
+        <span class="font-extrabold text-xs sm:text-sm text-center" id="nav-lenses">Interactive Lenses</span>
+      </button>
+
+      <button onclick="switchTab('instruments')" id="tab-instruments" class="tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-transparent bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        <span class="font-extrabold text-xs sm:text-sm text-center" id="nav-instruments">Optical Instruments</span>
+      </button>
+    </div>
+
+    <!-- MAIN INTERACTIVE DISPLAY CONTAINER -->
+    <div class="bg-white rounded-3xl shadow-xl border-4 border-indigo-950 p-4 sm:p-8 relative overflow-hidden">
+      
+      <!-- TAB 1: FUNDAMENTALS OF LIGHT REFRACTION (GLASS BLOCK) -->
+      <div id="content-refraction" class="tab-content">
+        <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+          
+          <!-- LEFT: Side Panel Controls & Formula Information -->
+          <div class="w-full lg:w-1/3 bg-blue-50/80 p-5 rounded-2xl border-2 border-blue-200 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
+                <svg class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <span id="refraction-title">Light Refraction in Glass Block</span>
+              </h3>
+              <p class="text-xs text-slate-600 mb-5 leading-relaxed" id="refraction-desc">
+                Observe how light bends towards the normal when entering a denser medium (glass), and bends away from the normal when exiting.
+              </p>
+
+              <!-- Angle of Incidence (i) Control -->
+              <div class="mb-5">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-inc-angle">Angle of Incidence (i)</span>
+                  <span id="val-refIncidence" class="text-blue-600 text-sm bg-blue-100 px-2.5 py-0.5 rounded-md font-bold">45°</span>
+                </div>
+                <input type="range" id="slider-refIncidence" min="0" max="80" value="45" oninput="updateRefraction()" class="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
+                  <span>0° (Normal)</span>
+                  <span>80°</span>
+                </div>
+              </div>
+
+              <!-- Refractive Index (n) Control -->
+              <div class="mb-6">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-ref-index">Refractive Index of Glass (n)</span>
+                  <span id="val-refIndex" class="text-indigo-600 text-sm bg-indigo-100 px-2.5 py-0.5 rounded-md font-bold">n = 1.50</span>
+                </div>
+                <input type="range" id="slider-refIndex" min="1.1" max="2.0" step="0.05" value="1.50" oninput="updateRefraction()" class="w-full h-3 bg-indigo-200 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
+                  <span>n = 1.10</span>
+                  <span>n = 2.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Snell's Law Math Box -->
+            <div class="bg-white p-4 rounded-xl border-2 border-indigo-100 text-xs">
+              <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span id="lbl-formula">Snell's Law Formula:</span>
+              </div>
+              <div class="bg-indigo-50 p-2.5 rounded-lg text-center font-mono text-indigo-900 text-sm mb-3 font-bold">
+                n = sin(i) / sin(r)
+              </div>
+              <div class="space-y-1.5 text-slate-700 font-medium">
+                <p>• Angle <span class="font-bold">i</span> = <span id="math-i" class="text-blue-600 font-bold">45°</span></p>
+                <p>• sin(i) = <span id="math-sin-i" class="font-mono">0.7071</span></p>
+                <p>• sin(r) = <span id="math-sin-r" class="font-mono">0.4714</span></p>
+                <p class="bg-yellow-50 p-2 rounded border border-yellow-200 font-extrabold text-slate-900">
+                  • Angle <span class="font-bold">r</span> = <span id="math-r" class="text-pink-600 font-extrabold">28.13°</span>
+                </p>
+                <p class="text-[11px] text-emerald-700 italic font-bold mt-1" id="tip-ref-bending">
+                  * Refracted ray bends TOWARDS normal line (r < i)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Interactive SVG Ray Diagram -->
+          <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
+            <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center">
+              <div class="w-full flex justify-between text-xs font-bold text-white mb-2 px-2">
+                <span class="text-sky-300">🏢 <span id="text-air1">Air (n = 1.00)</span></span>
+                <span class="text-amber-400">💎 <span id="text-glass1">Glass Block</span></span>
+              </div>
+
+              <!-- SVG Viewport configured with fluid viewBox -->
+              <svg id="refraction-svg" viewBox="0 0 500 400" class="w-full h-auto max-w-lg bg-slate-900 rounded-xl">
+                <!-- Programmatically populated by updateRefraction() -->
+              </svg>
+            </div>
+
+            <!-- Color Legends -->
+            <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs font-bold px-2 text-center">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> <span id="lbl-leg-inc">Incident Ray</span> (i)</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> <span id="lbl-leg-ref">Refracted Ray</span> (r)</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> <span id="lbl-leg-eme">Emergent Ray</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: TOTAL INTERNAL REFLECTION (SEMICIRCULAR BLOCK) -->
+      <div id="content-tir" class="tab-content hidden">
+        <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+          
+          <!-- LEFT: Semicircular controls -->
+          <div class="w-full lg:w-1/3 bg-teal-50/80 p-5 rounded-2xl border-2 border-teal-200 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
+                <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89" />
+                </svg>
+                <span id="tir-title">Total Internal Reflection</span>
+              </h3>
+              <p class="text-xs text-slate-600 mb-5 leading-relaxed" id="tir-desc">
+                Light travels from glass (denser) to air (less dense). Adjust the angle to witness the moment of Total Internal Reflection!
+              </p>
+
+              <!-- Angle of Incidence inside Glass Block -->
+              <div class="mb-5">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-tir-i">Angle of Incidence (i)</span>
+                  <span id="val-tirIncidence" class="text-teal-600 text-sm bg-teal-100 px-2.5 py-0.5 rounded-md font-bold">35°</span>
+                </div>
+                <input type="range" id="slider-tirIncidence" min="0" max="75" value="35" oninput="updateTIR()" class="w-full h-3 bg-teal-200 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
+                  <span>0° (Normal)</span>
+                  <span>75°</span>
+                </div>
+              </div>
+
+              <!-- Refractive index of dense block -->
+              <div class="mb-6">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-tir-n">Refractive Index of Glass (n)</span>
+                  <span id="val-tirIndex" class="text-indigo-600 text-sm bg-indigo-100 px-2.5 py-0.5 rounded-md font-bold">n = 1.52</span>
+                </div>
+                <input type="range" id="slider-tirIndex" min="1.3" max="1.8" step="0.02" value="1.52" oninput="updateTIR()" class="w-full h-3 bg-indigo-200 rounded-lg appearance-none cursor-pointer">
+              </div>
+            </div>
+
+            <!-- Critical Angle Calculations -->
+            <div class="bg-white p-4 rounded-xl border-2 border-teal-100 text-xs">
+              <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span id="lbl-crit-angle">Critical Angle (c):</span>
+              </div>
+              <div class="bg-teal-50 p-2.5 rounded-lg text-center font-mono text-teal-900 text-sm mb-3 font-bold">
+                sin(c) = 1 / n
+              </div>
+              <div class="space-y-1.5 text-slate-700 font-medium">
+                <p>• Refractive Index <span class="font-bold">n</span> = <span id="math-tir-n" class="font-bold text-indigo-600">1.52</span></p>
+                <p>• Calculated Critical Angle <span class="font-bold">c</span> = <span id="math-tir-c" class="text-pink-600 font-extrabold bg-pink-100 px-1.5 py-0.5 rounded">41.14°</span></p>
+                <p>• Current Angle <span class="font-bold">i</span> = <span id="math-tir-i" class="font-bold text-teal-600">35°</span></p>
+                
+                <!-- TIR Status Alert -->
+                <div id="tir-status" class="mt-3 p-3 rounded-lg border-2 font-bold bg-green-100 text-green-800 border-green-300">
+                  Refraction (i < c)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Diagram of Semicircular Block -->
+          <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
+            <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center">
+              <div class="w-full flex justify-between text-xs font-bold text-white mb-2 px-2">
+                <span class="text-amber-400">💎 <span id="text-glass2">Glass Block</span></span>
+                <span class="text-sky-300">🏢 <span id="text-air2">Air (n = 1.00)</span></span>
+              </div>
+
+              <svg id="tir-svg" viewBox="0 0 500 400" class="w-full h-auto max-w-lg bg-slate-900 rounded-xl">
+                <!-- Programmatically populated by updateTIR() -->
+              </svg>
+            </div>
+
+            <!-- Color Legends -->
+            <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs font-bold px-2 text-center">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400 inline-block"></span> <span id="lbl-leg-inc2">Incident Ray</span></span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> <span id="lbl-leg-ref2">Refracted Ray</span></span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> <span id="lbl-leg-refl">Reflected Ray</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: THIN LENS FORMATION & CALCULATIONS -->
+      <div id="content-lenses" class="tab-content hidden">
+        <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+          
+          <!-- LEFT: Controls and Thin Lens Formula Calculations -->
+          <div class="w-full lg:w-1/3 bg-pink-50/80 p-5 rounded-2xl border-2 border-pink-200 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
+                <svg class="w-5 h-5 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span id="lens-title">Image Formation by Thin Lenses</span>
+              </h3>
+              <p class="text-xs text-slate-600 mb-4 leading-relaxed" id="lens-desc">
+                Drag the orange candle or use the sliders to explore image formation and thin lens calculations in real-time.
+              </p>
+
+              <!-- Lens Choice (Convex vs. Concave) -->
+              <div class="mb-4">
+                <label class="block text-xs font-black text-indigo-950 mb-1.5" id="lbl-lens-type">Select Lens Type</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="setLensType('convex')" id="btn-convex" class="py-3 px-3 rounded-xl font-bold text-xs border-2 bg-pink-500 text-white border-indigo-950 shadow-md transition-all active:scale-95">
+                    🔎 <span id="text-convex">Convex Lens</span>
+                  </button>
+                  <button onclick="setLensType('concave')" id="btn-concave" class="py-3 px-3 rounded-xl font-bold text-xs border-2 bg-white text-pink-700 border-pink-200 hover:bg-pink-50 transition-all active:scale-95">
+                    👓 <span id="text-concave">Concave Lens</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Focal Length (f) Selector -->
+              <div class="mb-4">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-focal-len">Focal Length (f)</span>
+                  <span id="val-lensFocal" class="text-pink-600 text-sm bg-pink-100 px-2.5 py-0.5 rounded-md font-bold">f = 80 px</span>
+                </div>
+                <input type="range" id="slider-lensFocal" min="50" max="110" value="80" oninput="updateLens()" class="w-full h-3 bg-pink-200 rounded-lg appearance-none cursor-pointer">
+              </div>
+
+              <!-- Object distance (u) Slider -->
+              <div class="mb-5">
+                <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
+                  <span id="lbl-obj-dist">Object Distance (u)</span>
+                  <span id="val-lensObjectDist" class="text-purple-600 text-sm bg-purple-100 px-2.5 py-0.5 rounded-md font-bold">u = 140 px</span>
+                </div>
+                <input type="range" id="slider-lensObjectDist" min="20" max="300" value="140" oninput="updateLens()" class="w-full h-3 bg-purple-200 rounded-lg appearance-none cursor-pointer">
+                <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
+                  <span id="lbl-close">Close (u < f)</span>
+                  <span id="lbl-far">Far (u > 2f)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formula Application sandbox -->
+            <div class="bg-white p-4 rounded-xl border-2 border-pink-100 text-xs">
+              <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                <span id="lbl-lens-calc">Thin Lens Formula Calculation:</span>
+              </div>
+              <div class="bg-pink-50 p-2.5 rounded-lg text-center font-mono text-pink-900 text-xs mb-3 font-bold">
+                1/f = 1/u + 1/v
+              </div>
+              <div class="space-y-1.5 text-slate-700 font-medium">
+                <p>• <span id="lbl-u-px">Object Distance (u)</span> = <span id="math-lens-u" class="font-bold text-indigo-600">140 px</span></p>
+                <p>• <span id="lbl-f-px">Focal Length (f)</span> = <span id="math-lens-f" class="font-bold text-indigo-600">80 px</span></p>
+                <p class="bg-pink-50 p-2 rounded border border-pink-100 font-extrabold text-slate-950">
+                  • <span id="lbl-v-px">Image Distance (v)</span> = <span id="math-lens-v" class="text-pink-600 font-black">186.7 px</span>
+                </p>
+                <p>• <span id="lbl-mag">Linear Magnification (m)</span> = <span id="math-lens-m" class="font-extrabold text-pink-600">1.33</span></p>
+                
+                <div class="mt-3 p-3 bg-indigo-50 border-2 border-indigo-200 rounded-lg text-indigo-950">
+                  <span class="block text-[10px] font-black uppercase text-indigo-600 mb-1" id="lbl-img-char">Image Characteristics:</span>
+                  <div id="lens-characteristics-tags" class="flex flex-wrap gap-1.5">
+                    <!-- Updated via JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Interactive Ray Drawing Area with Candle illustration -->
+          <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
+            <div class="text-center mb-2 px-2">
+              <span id="drag-hint" class="text-xs bg-pink-100 text-pink-800 border-2 border-pink-300 font-extrabold px-3 py-1.5 rounded-full animate-bounce inline-block">
+                Tip: You can drag the orange candle directly inside the diagram below!
+              </span>
+            </div>
+
+            <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center select-none">
+              <!-- Interactive Workspace SVG (Width: 800) -->
+              <svg id="lens-svg" viewBox="0 0 800 400" class="w-full h-auto max-w-2xl bg-slate-900 rounded-xl" style="cursor: grab;">
+                <!-- Filled dynamically and allows mouse dragging -->
+              </svg>
+            </div>
+
+            <!-- Legends -->
+            <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs font-bold px-2 text-center">
+              <span class="flex items-center gap-1.5"><span class="w-4 h-1 bg-emerald-500 inline-block"></span> <span id="lbl-leg-p1">Parallel Ray</span></span>
+              <span class="flex items-center gap-1.5"><span class="w-4 h-1 bg-pink-500 inline-block"></span> <span id="lbl-leg-p2">Optical Center Ray</span></span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-purple-500 inline-block"></span> <span id="lbl-leg-img">Formed Image</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: APPLICATIONS OF LENSES -->
+      <div id="content-instruments" class="tab-content hidden">
+        <div class="flex flex-col lg:flex-row gap-6 items-stretch">
+          
+          <!-- LEFT: Syllabus configurations details -->
+          <div class="w-full lg:w-1/3 bg-purple-50/80 p-5 rounded-2xl border-2 border-purple-200 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
+                <svg class="w-5 h-5 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                </svg>
+                <span id="inst-title">Applications of Lenses (Instruments)</span>
+              </h3>
+              <p class="text-xs text-slate-600 mb-4 leading-relaxed" id="inst-desc">
+                Explore how double-lens configurations (Microscopes & Telescopes) are engineered under the KSSM syllabus.
+              </p>
+
+              <!-- Instruments Selection toggle -->
+              <div class="mb-4">
+                <label class="block text-xs font-black text-indigo-950 mb-1.5" id="lbl-inst-type">Select Instrument</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="setInstrument('microscope')" id="btn-microscope" class="py-3 px-3 rounded-xl font-bold text-xs border-2 bg-purple-600 text-white border-indigo-950 shadow-md transition-all active:scale-95">
+                    🔬 <span id="text-microscope">Compound Microscope</span>
+                  </button>
+                  <button onclick="setInstrument('telescope')" id="btn-telescope" class="py-3 px-3 rounded-xl font-bold text-xs border-2 bg-white text-purple-700 border-purple-200 hover:bg-purple-50 transition-all active:scale-95">
+                    🔭 <span id="text-telescope">Astronomical Telescope</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detailed criteria constraints according to KSSM syllabus guidelines -->
+            <div class="bg-white p-4 rounded-xl border-2 border-purple-100 text-xs">
+              <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5 text-purple-700">
+                <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
+                </svg>
+                <span id="lbl-kssm-spec">KSSM Specification Criteria:</span>
+              </div>
+              <p id="inst-spec-text" class="text-slate-700 font-medium leading-relaxed text-justify">
+                Loading...
+              </p>
+            </div>
+          </div>
+
+          <!-- RIGHT: Diagram of the compound instruments -->
+          <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
+            <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center">
+              <!-- Responsive SVG Drawing with fluid scaling -->
+              <svg id="inst-svg" viewBox="0 0 600 350" class="w-full h-auto max-w-xl bg-slate-900 rounded-xl">
+                <!-- Dynamically drawn via updateInstrument() -->
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CHEERFUL KSSM STUDY TIP BANNER -->
+    <div class="mt-6 bg-yellow-100 border-l-8 border-yellow-400 p-4 rounded-xl flex items-start gap-3 shadow-sm">
+      <span class="text-2xl">💡</span>
+      <div>
+        <h4 class="font-extrabold text-yellow-950 text-sm" id="tips-header">KSSM Study Tip</h4>
+        <p class="text-xs text-yellow-900 mt-0.5" id="tips-body">Refractive index 'n' has no unit. It is a ratio of light speeds or sines of angles!</p>
+      </div>
+    </div>
+
+    <!-- FUN FOOTER -->
+    <footer class="text-center mt-8 text-xs text-slate-500 font-extrabold">
+      <p id="author-notes" class="bg-white border-2 border-indigo-950 inline-block px-4 py-2 rounded-full shadow-md text-indigo-950">
+        Designed for Malaysian High School Students with Cheerful Physics Spirit! 🚀✨
+      </p>
+    </footer>
+  </main>
+
+  <!-- PHYSICS SIMULATION ENGINE (VANILLA JAVASCRIPT) -->
+  <script>
+    // Dual Language Dictionary for instantaneous language toggling
+    const i18n = {
+      en: {
+        title: "OptiSains Simulator",
+        subtitle: "KSSM Physics Form 4: Light & Optics",
+        langBtn: "Bahasa Melayu",
+        navRefraction: "Glass Block",
+        navTIR: "Total Internal Reflection",
+        navLenses: "Interactive Lenses",
+        navInstruments: "Optical Instruments",
+
+        // Glass Block Tab
+        refractionTitle: "Light Refraction in Glass Block",
+        refractionDesc: "Observe how light bends towards the normal when entering a denser medium (glass), and bends away from the normal when exiting back to the air.",
+        incidenceAngle: "Angle of Incidence (i)",
+        refractiveIndex: "Refractive Index of Glass (n)",
+        air: "Air",
+        glass: "Glass Block",
+        incidentRay: "Incident Ray",
+        refractedRay: "Refracted Ray",
+        emergentRay: "Emergent Ray",
+        normalLine: "Normal Line",
+        formulaUsed: "Snell's Law Formula:",
+        towardsNormal: "* Refracted ray bends TOWARDS normal line (r < i)",
+        awayNormal: "* Refracted ray bends AWAY from normal line",
+
+        // Semicircular Total Internal Reflection Tab
+        tirTitle: "Total Internal Reflection (Semicircular Block)",
+        tirDesc: "Light travels from glass (denser) to air (less dense). Adjust the angle to witness the exact moment of Total Internal Reflection (TIR) when the critical angle is exceeded!",
+        criticalAngle: "Critical Angle (c)",
+        stateLess: "Refraction (i < c): Light refracts away from normal into the air.",
+        stateEqual: "Boundary (i = c): Light refracts at 90°, skimming along the flat boundary.",
+        stateMore: "TIR (i > c): Light reflects completely back inside the glass. Total Internal Reflection achieved!",
+
+        // Interactive Thin Lenses Tab
+        lensTitle: "Image Formation by Thin Lenses",
+        lensDesc: "Drag the orange candle or use the sliders to explore image formation and thin lens calculations in real-time.",
+        lensType: "Select Lens Type",
+        convex: "Convex Lens (Converging)",
+        concave: "Concave Lens (Diverging)",
+        focalLength: "Focal Length (f)",
+        objectDistance: "Object Distance (u)",
+        thinLensFormula: "Thin Lens Formula Calculation:",
+        imageDistance: "Calculated Image Distance (v)",
+        magnification: "Linear Magnification (m)",
+        characteristics: "Image Characteristics:",
+        real: "Real",
+        virtual: "Virtual",
+        upright: "Upright",
+        inverted: "Inverted",
+        magnified: "Magnified",
+        diminished: "Diminished",
+        sameSize: "Same size as object",
+        infinityMsg: "At Infinity (Parallel Rays)",
+        candleLabel: "Candle Object",
+        imageLabel: "Formed Image",
+        close: "Close (u < f)",
+        far: "Far (u > 2f)",
+        dragHint: "Tip: You can drag the orange candle directly inside the diagram below!",
+
+        // Optical Instruments Tab
+        instTitle: "Applications of Lenses (Instruments)",
+        instDesc: "Explore how double-lens configurations (Microscopes & Telescopes) are engineered under the KSSM syllabus.",
+        instType: "Select Instrument",
+        microscope: "Compound Microscope",
+        telescope: "Astronomical Telescope",
+        microscopeSpec: "Specifications: Objective lens has short focal length (f_o). Eyepiece has longer focal length (f_e). The object is placed between f_o and 2f_o to form a magnified real intermediate image, which then acts as a virtual object within the focal length of the eyepiece (u_e < f_e), producing a highly magnified virtual final image.",
+        telescopeSpec: "Specifications (At Normal Adjustment): Objective lens has a long focal length (f_o) and wide aperture to collect light. Eyepiece has a short focal length (f_e). The distance between the lenses is L = f_o + f_e. The final virtual image is formed at infinity.",
+        objectiveLens: "Objective Lens",
+        eyepieceLens: "Eyepiece Lens",
+        intermediateImage: "First Image (I₁)",
+        finalImage: "Final Image (I₂)",
+
+        // Tips
+        tipTitle: "KSSM Study Tip",
+        tipRefraction: "Refractive index 'n' has no unit. It is a ratio of light speeds or sines of angles!",
+        tipTIR: "Rainbows, optical fiber cables, and mirages are all natural/technological phenomena based on Total Internal Reflection!",
+        tipLenses: "A magnifying glass is a convex lens with the object placed closer than its focal point (u < f).",
+        tipInst: "The total magnification of a microscope is m = m_o × m_e, making tiny cells visible!",
+        authorNotes: "Designed for Malaysian High School Students with Cheerful Physics Spirit! 🚀✨"
+      },
+      bm: {
+        title: "Simulator OptiSains",
+        subtitle: "Fizik KSSM Tingkatan 4: Cahaya & Optik",
+        navRefraction: "Bongkah Kaca",
+        navTIR: "Pantulan Dalam Penuh",
+        navLenses: "Kanta Interaktif",
+        navInstruments: "Alatan Optik",
+        langBtn: "English",
+
+        // Glass Block Tab
+        refractionTitle: "Pembiasan Cahaya dalam Bongkah Kaca",
+        refractionDesc: "Perhatikan bagaimana cahaya membengkok mendekati garis normal apabila memasuki medium lebih tumpat (kaca), dan membengkok menjauhi normal apabila keluar.",
+        incidenceAngle: "Sudut Tuju (i)",
+        refractiveIndex: "Indeks Biasan Kaca (n)",
+        air: "Udara",
+        glass: "Bongkah Kaca",
+        incidentRay: "Sinar Tuju",
+        refractedRay: "Sinar Biasan",
+        emergentRay: "Sinar Muncul",
+        normalLine: "Garis Normal",
+        formulaUsed: "Formula Undang-undang Snell:",
+        towardsNormal: "* Sinar biasan membengkok MENDEKATI normal (r < i)",
+        awayNormal: "* Sinar biasan membengkok MENJAUHI normal",
+
+        // Total Internal Reflection Tab
+        tirTitle: "Pantulan Dalam Penuh (Bongkah Semibulatan)",
+        tirDesc: "Cahaya bergerak dari kaca (lebih tumpat) ke udara (kurang tumpat). Laraskan sudut untuk menyaksikan PDP berlaku apabila sudut tuju melebihi sudut genting!",
+        criticalAngle: "Sudut Genting (c)",
+        stateLess: "Pembiasan (i < c): Cahaya terbias menjauhi normal keluar ke udara.",
+        stateEqual: "Sempadan (i = c): Sinar terbias pada sudut 90° sepanjang permukaan rata.",
+        stateMore: "PDP (i > c): Cahaya dipantulkan semula ke dalam kaca. Pantulan Dalam Penuh tercapai!",
+
+        // Interactive Lenses Tab
+        lensTitle: "Pembentukan Imej oleh Kanta Nipis",
+        lensDesc: "Seret lilin oren atau guna pelaras untuk meneroka pembentukan imej dan pengiraan kanta nipis dalam masa nyata.",
+        lensType: "Pilih Jenis Kanta",
+        convex: "Kanta Cembung (Penumpu)",
+        concave: "Kanta Cekung (Pencapah)",
+        focalLength: "Panjang Fokus (f)",
+        objectDistance: "Jarak Objek (u)",
+        thinLensFormula: "Pengiraan Formula Kanta Nipis:",
+        imageDistance: "Jarak Imej Kiraan (v)",
+        magnification: "Pembesaran Linear (m)",
+        characteristics: "Ciri-ciri Imej:",
+        real: "Nyata",
+        virtual: "Maya",
+        upright: "Tegak",
+        inverted: "Terbalik",
+        magnified: "Diperbesar",
+        diminished: "Diperkecil",
+        sameSize: "Sama saiz dengan objek",
+        infinityMsg: "Di Infiniti (Sinar Selari)",
+        candleLabel: "Objek Lilin",
+        imageLabel: "Imej Terbentuk",
+        close: "Dekat (u < f)",
+        far: "Jauh (u > 2f)",
+        dragHint: "Tip: Anda boleh seret lilin oren terus pada rajah kanta di bawah!",
+
+        // Optical Instruments Tab
+        instTitle: "Aplikasi Kanta (Alatan Optik)",
+        instDesc: "Terokai gabungan sistem dua kanta (Mikroskop & Teleskop) mengikut sukatan pelajaran KSSM Fizik.",
+        instType: "Pilih Alatan Optik",
+        microscope: "Mikroskop Majmuk",
+        telescope: "Teleskop Astronomi",
+        microscopeSpec: "Spesifikasi: Panjang fokus kanta objektif (f_o) adalah pendek. Panjang fokus kanta mata (f_e) adalah lebih panjang. Objek diletakkan di antara f_o dan 2f_o untuk menghasilkan imej nyata yang terbalik dan diperbesar. Imej pertama bertindak sebagai objek di dalam kanta mata (u_e < f_e), menghasilkan imej akhir yang maya, terbalik, dan sangat besar.",
+        telescopeSpec: "Spesifikasi (Pelarasan Normal): Kanta objektif mempunyai panjang fokus panjang (f_o) dan bukaan luas. Kanta mata mempunyai panjang fokus pendek (f_e). Jarak antara kanta L = f_o + f_e. Imej akhir terbentuk di infiniti.",
+        objectiveLens: "Kanta Objektif",
+        eyepieceLens: "Kanta Mata",
+        intermediateImage: "Imej Pertama (I₁)",
+        finalImage: "Imej Akhir (I₂)",
+
+        // Tips
+        tipTitle: "Tip Belajar KSSM",
+        tipRefraction: "Indeks biasan 'n' tidak mempunyai unit! Ia merupakan nisbah laju cahaya atau sinus sudut sahaja.",
+        tipTIR: "Pelangi, kabel gentian optik, dan logamaya merupakan fenomena semula jadi berasaskan Pantulan Dalam Penuh!",
+        tipLenses: "Kanta pembesar ialah kanta cembung dengan kedudukan objek diletakkan lebih dekat daripada titik fokus (u < f).",
+        tipInst: "Jumlah pembesaran mikroskop ialah m = m_o × m_e, membolehkan sel-sel halus dilihat dengan jelas!",
+        authorNotes: "Direka khas untuk Pelajar Menengah Malaysia dengan Semangat Fizik yang Ceria! 🚀✨"
+      }
+    };
+
+    // Application state
+    let currentLang = 'en';
+    let currentTab = 'refraction';
+    let currentLensType = 'convex';
+    let currentInstrument = 'microscope';
+
+    let refIncidence = 45;
+    let refIndex = 1.5;
+    let tirIncidence = 35;
+    let tirIndex = 1.52;
+    let lensFocal = 80;
+    let lensObjectDist = 140;
+
+    let isDragging = false;
+
+    // Handles bilingual toggling
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'bm' : 'en';
+      translateUI();
+      updateRefraction();
+      updateTIR();
+      updateLens();
+      updateInstrument();
+    }
+
+    // Dynamic UI Translation
+    function translateUI() {
+      const t = i18n[currentLang];
+      document.getElementById('header-title').innerText = t.title;
+      document.getElementById('header-subtitle').innerText = t.subtitle;
+      document.getElementById('lang-btn-text').innerText = t.langBtn;
+
+      // Tab Buttons
+      document.getElementById('nav-refraction').innerText = t.navRefraction;
+      document.getElementById('nav-tir').innerText = t.navTIR;
+      document.getElementById('nav-lenses').innerText = t.navLenses;
+      document.getElementById('nav-instruments').innerText = t.navInstruments;
+
+      // Refraction Panel Text
+      document.getElementById('refraction-title').innerText = t.refractionTitle;
+      document.getElementById('refraction-desc').innerText = t.refractionDesc;
+      document.getElementById('lbl-inc-angle').innerText = t.incidenceAngle;
+      document.getElementById('lbl-ref-index').innerText = t.refractiveIndex;
+      document.getElementById('lbl-formula').innerText = t.formulaUsed;
+      document.getElementById('text-air1').innerText = t.air + " (n = 1.00)";
+      document.getElementById('text-glass1').innerText = t.glass;
+      document.getElementById('lbl-leg-inc').innerText = t.incidentRay;
+      document.getElementById('lbl-leg-ref').innerText = t.refractedRay;
+      document.getElementById('lbl-leg-eme').innerText = t.emergentRay;
+
+      // TIR Panel Text
+      document.getElementById('tir-title').innerText = t.tirTitle;
+      document.getElementById('tir-desc').innerText = t.tirDesc;
+      document.getElementById('lbl-tir-i').innerText = t.incidenceAngle;
+      document.getElementById('lbl-tir-n').innerText = t.refractiveIndex;
+      document.getElementById('lbl-crit-angle').innerText = t.criticalAngle;
+      document.getElementById('text-glass2').innerText = t.glass;
+      document.getElementById('text-air2').innerText = t.air + " (n = 1.00)";
+      document.getElementById('lbl-leg-inc2').innerText = t.incidentRay;
+      document.getElementById('lbl-leg-ref2').innerText = t.refractedRay;
+      document.getElementById('lbl-leg-refl').innerText = t.reflectedRay;
+
+      // Lens Panel Text
+      document.getElementById('lens-title').innerText = t.lensTitle;
+      document.getElementById('lens-desc').innerText = t.lensDesc;
+      document.getElementById('lbl-lens-type').innerText = t.lensType;
+      document.getElementById('text-convex').innerText = t.convex.split(" ")[0] + " " + t.convex.split(" ")[1];
+      document.getElementById('text-concave').innerText = t.concave.split(" ")[0] + " " + t.concave.split(" ")[1];
+      document.getElementById('lbl-focal-len').innerText = t.focalLength;
+      document.getElementById('lbl-obj-dist').innerText = t.objectDistance;
+      document.getElementById('lbl-close').innerText = t.close;
+      document.getElementById('lbl-far').innerText = t.far;
+      document.getElementById('lbl-lens-calc').innerText = t.thinLensFormula;
+      document.getElementById('lbl-u-px').innerText = t.objectDistance + " (u)";
+      document.getElementById('lbl-f-px').innerText = t.focalLength + " (f)";
+      document.getElementById('lbl-v-px').innerText = t.imageDistance + " (v)";
+      document.getElementById('lbl-mag').innerText = t.magnification;
+      document.getElementById('lbl-img-char').innerText = t.characteristics;
+      document.getElementById('drag-hint').innerText = t.dragHint;
+      document.getElementById('lbl-leg-p1').innerText = t.incidentRay;
+      document.getElementById('lbl-leg-p2').innerText = t.normalLine;
+      document.getElementById('lbl-leg-img').innerText = t.imageLabel;
+
+      // Instruments Tab Text
+      document.getElementById('inst-title').innerText = t.instTitle;
+      document.getElementById('inst-desc').innerText = t.instDesc;
+      document.getElementById('lbl-inst-type').innerText = t.instType;
+      document.getElementById('text-microscope').innerText = t.microscope;
+      document.getElementById('text-telescope').innerText = t.telescope;
+      document.getElementById('lbl-kssm-spec').innerText = "KSSM Specs:";
+
+      // Footer
+      document.getElementById('author-notes').innerText = t.authorNotes;
+      updateTipText();
+    }
+
+    // Dynamic educational study tip selector
+    function updateTipText() {
+      const t = i18n[currentLang];
+      document.getElementById('tips-header').innerText = t.tipTitle;
+      if (currentTab === 'refraction') {
+        document.getElementById('tips-body').innerText = t.tipRefraction;
+      } else if (currentTab === 'tir') {
+        document.getElementById('tips-body').innerText = t.tipTIR;
+      } else if (currentTab === 'lenses') {
+        document.getElementById('tips-body').innerText = t.tipLenses;
+      } else if (currentTab === 'instruments') {
+        document.getElementById('tips-body').innerText = t.tipInst;
+      }
+    }
+
+    // Navigational tab switcher
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = 'tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-transparent bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50';
+      });
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+
+      let activeClass = '';
+      if (tabId === 'refraction') activeClass = 'from-blue-400 to-cyan-400 text-white';
+      else if (tabId === 'tir') activeClass = 'from-teal-400 to-emerald-400 text-white';
+      else if (tabId === 'lenses') activeClass = 'from-pink-400 to-rose-400 text-white';
+      else if (tabId === 'instruments') activeClass = 'from-purple-400 to-violet-400 text-white';
+
+      document.getElementById(`tab-${tabId}`).className = `tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-indigo-950 bg-gradient-to-br ${activeClass} shadow-xl scale-102`;
+      document.getElementById(`content-${tabId}`).classList.remove('hidden');
+      
+      updateTipText();
+    }
+
+    // --- TAB 1: GLASS BLOCK PHYSICS ---
+    function updateRefraction() {
+      refIncidence = parseInt(document.getElementById('slider-refIncidence').value);
+      refIndex = parseFloat(document.getElementById('slider-refIndex').value);
+
+      document.getElementById('val-refIncidence').innerText = refIncidence + '°';
+      document.getElementById('val-refIndex').innerText = 'n = ' + refIndex.toFixed(2);
+
+      // Snell's Law Math logic
+      const iRad = refIncidence * Math.PI / 180;
+      const sinI = Math.sin(iRad);
+      const sinR = sinI / refIndex;
+      const rRad = Math.asin(Math.min(sinR, 1.0));
+      const rDeg = rRad * 180 / Math.PI;
+
+      document.getElementById('math-i').innerText = refIncidence + '°';
+      document.getElementById('math-sin-i').innerText = sinI.toFixed(4);
+      document.getElementById('math-sin-r').innerText = sinR.toFixed(4);
+      document.getElementById('math-r').innerText = rDeg.toFixed(2) + '°';
+
+      const t = i18n[currentLang];
+      const tipText = document.getElementById('tip-ref-bending');
+      if (refIncidence > 0) {
+        tipText.innerText = t.towardsNormal;
+      } else {
+        tipText.innerText = "* " + (currentLang === 'en' ? 'Light travels straight without bending' : 'Cahaya bergerak lurus tanpa membengkok');
+      }
+
+      // Drawing the SVG Diagram elements dynamically
+      const svg = document.getElementById('refraction-svg');
+      const entryX = 250;
+      const entryY = 120;
+      
+      const incDx = 100 * Math.tan(iRad);
+      const startX = entryX - incDx;
+      const startY = entryY - 100;
+
+      const refDx = 160 * Math.tan(rRad);
+      const exitX = entryX + refDx;
+      const exitY = 280;
+
+      const emDx = 100 * Math.tan(iRad);
+      const endX = exitX + emDx;
+      const endY = exitY + 100;
+
+      const originalPathEndX = entryX + (260 * Math.tan(iRad));
+
+      let svgHTML = `
+        <!-- Glass block graphic representation -->
+        <rect x="50" y="120" width="400" height="160" fill="rgba(147, 197, 253, 0.25)" stroke="#60a5fa" stroke-width="4" rx="4" />
+        <text x="70" y="150" fill="#93c5fd" class="text-xs font-black tracking-widest uppercase opacity-75">${t.glass}</text>
+
+        <!-- Normal Lines -->
+        <line x1="250" y1="20" x2="250" y2="220" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
+        <text x="255" y="40" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
+        <line x1="${exitX}" y1="180" x2="${exitX}" y2="380" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
+        <text x="${exitX + 5}" y="370" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
+
+        <!-- Unbent projection indicator -->
+        <line x1="${entryX}" y1="${entryY}" x2="${originalPathEndX}" y2="380" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="4,4" />
+
+        <!-- Physics Light Ray drawings -->
+        <!-- Incident -->
+        <line x1="${startX}" y1="${startY}" x2="${entryX}" y2="${entryY}" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" class="glow-effect" />
+        <circle cx="${entryX}" cy="${entryY}" r="5" fill="#f59e0b" />
+        
+        <!-- Refracted -->
+        <line x1="${entryX}" y1="${entryY}" x2="${exitX}" y2="${exitY}" stroke="#10b981" stroke-width="4.5" stroke-linecap="round" />
+        <circle cx="${exitX}" cy="${exitY}" r="5" fill="#10b981" />
+        
+        <!-- Emergent -->
+        <line x1="${exitX}" y1="${exitY}" x2="${endX}" y2="${endY}" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" />
+      `;
+
+      // Draw arcs if angles are broad
+      if (refIncidence > 5) {
+        svgHTML += `
+          <!-- Arc for i -->
+          <path d="M 250,80 A 40,40 0 0,0 ${250 - 40 * Math.sin(iRad)},${120 - 40 * Math.cos(iRad)}" fill="none" stroke="#f59e0b" stroke-width="2" />
+          <text x="${entryX - 25}" y="${entryY - 20}" fill="#f59e0b" class="text-xs font-bold">i</text>
+          
+          <!-- Arc for r -->
+          <path d="M 250,160 A 40,40 0 0,1 ${250 + 40 * Math.sin(rRad)},${120 + 40 * Math.cos(rRad)}" fill="none" stroke="#10b981" stroke-width="2" />
+          <text x="${entryX + 15}" y="${entryY + 30}" fill="#10b981" class="text-xs font-bold">r</text>
+        `;
+      }
+      svg.innerHTML = svgHTML;
+    }
+
+    // --- TAB 2: TOTAL INTERNAL REFLECTION (TIR) ---
+    function updateTIR() {
+      tirIncidence = parseInt(document.getElementById('slider-tirIncidence').value);
+      tirIndex = parseFloat(document.getElementById('slider-tirIndex').value);
+
+      document.getElementById('val-tirIncidence').innerText = tirIncidence + '°';
+      document.getElementById('val-tirIndex').innerText = 'n = ' + tirIndex.toFixed(2);
+
+      const cRad = Math.asin(1.0 / tirIndex);
+      const cDeg = cRad * 180 / Math.PI;
+      const iRad = tirIncidence * Math.PI / 180;
+
+      document.getElementById('math-tir-n').innerText = tirIndex.toFixed(2);
+      document.getElementById('math-tir-c').innerText = cDeg.toFixed(2) + '°';
+      document.getElementById('math-tir-i').innerText = tirIncidence + '°';
+
+      const statusBox = document.getElementById('tir-status');
+      const t = i18n[currentLang];
+      
+      const isTIR = tirIncidence > cDeg;
+      const isBoundary = Math.abs(tirIncidence - cDeg) < 0.5;
+
+      if (isTIR) {
+        statusBox.className = "mt-3 p-3 rounded-lg border-2 font-bold bg-rose-100 text-rose-800 border-rose-300";
+        statusBox.innerText = t.stateMore;
+      } else if (isBoundary) {
+        statusBox.className = "mt-3 p-3 rounded-lg border-2 font-bold bg-amber-100 text-amber-800 border-amber-300";
+        statusBox.innerText = t.stateEqual;
+      } else {
+        statusBox.className = "mt-3 p-3 rounded-lg border-2 font-bold bg-green-100 text-green-800 border-green-300";
+        statusBox.innerText = t.stateLess;
+      }
+
+      // Semicircular glass calculations
+      const svg = document.getElementById('tir-svg');
+      const cx = 250;
+      const cy = 200;
+      const r = 160;
+
+      const startX = cx - r * Math.sin(iRad);
+      const startY = cy + r * Math.cos(iRad);
+
+      let refractedRayHTML = '';
+      let reflectedRayHTML = '';
+
+      if (isTIR) {
+        // Reflection ray
+        const refX = cx + r * Math.sin(iRad);
+        const refY = cy + r * Math.cos(iRad);
+        reflectedRayHTML = `
+          <line x1="${cx}" y1="${cy}" x2="${refX}" y2="${refY}" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" />
+          <path d="M 250,240 A 40,40 0 0,0 ${250 + 40 * Math.sin(iRad)},${200 + 40 * Math.cos(iRad)}" fill="none" stroke="#ef4444" stroke-width="2" />
+          <text x="${cx + 15}" y="${cy + 50}" fill="#ef4444" class="text-xs font-bold">r (= i)</text>
+        `;
+      } else {
+        // Refraction ray
+        const sinR = tirIndex * Math.sin(iRad);
+        const rRad = Math.asin(Math.min(sinR, 1.0));
+        const refX = cx + r * Math.sin(rRad);
+        const refY = cy - r * Math.cos(rRad);
+        const rDeg = rRad * 180 / Math.PI;
+
+        refractedRayHTML = `
+          <line x1="${cx}" y1="${cy}" x2="${refX}" y2="${refY}" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" />
+        `;
+        if (rDeg > 3) {
+          refractedRayHTML += `
+            <path d="M 250,160 A 40,40 0 0,1 ${250 + 40 * Math.sin(rRad)},${200 - 40 * Math.cos(rRad)}" fill="none" stroke="#f59e0b" stroke-width="2" />
+            <text x="${cx + 25}" y="${cy - 50}" fill="#f59e0b" class="text-xs font-bold">r</text>
+          `;
+        }
+
+        // Weak reflection ray representing boundary leakage
+        const reflX = cx + r * Math.sin(iRad);
+        const reflY = cy + r * Math.cos(iRad);
+        reflectedRayHTML = `
+          <line x1="${cx}" y1="${cy}" x2="${reflX}" y2="${reflY}" stroke="#ef4444" stroke-width="3" opacity="0.25" />
+        `;
+      }
+
+      svg.innerHTML = `
+        <rect x="0" y="0" width="500" height="200" fill="rgba(224, 242, 254, 0.05)" />
+        <path d="M ${cx - r},${cy} A ${r},${r} 0 0,0 ${cx + r},${cy} Z" fill="rgba(147, 197, 253, 0.25)" stroke="#60a5fa" stroke-width="4" />
+        <text x="120" y="280" fill="#93c5fd" class="text-xs font-black tracking-widest uppercase opacity-75">${t.glass}</text>
+        <text x="120" y="100" fill="#38bdf8" class="text-xs font-black tracking-widest uppercase opacity-50">${t.air}</text>
+
+        <!-- Normal perpendicular reference -->
+        <line x1="250" y1="30" x2="250" y2="370" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
+        <text x="255" y="50" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
+
+        <!-- Incident light path -->
+        <line x1="${startX}" y1="${startY}" x2="${cx}" y2="${cy}" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" class="glow-effect" />
+        <circle cx="${cx}" cy="${cy}" r="5" fill="#f59e0b" />
+        ${tirIncidence > 3 ? `<path d="M 250,240 A 40,40 0 0,1 ${250 - 40 * Math.sin(iRad)},${200 + 40 * Math.cos(iRad)}" fill="none" stroke="#38bdf8" stroke-width="2" />` : ''}
+        <text x="${cx - 20}" y="${cy + 50}" fill="#38bdf8" class="text-xs font-bold">i</text>
+
+        ${refractedRayHTML}
+        ${reflectedRayHTML}
+      `;
+    }
+
+    // --- TAB 3: THIN LENSES WORKSPACE ---
+    function setLensType(type) {
+      currentLensType = type;
+      document.getElementById('btn-convex').className = type === 'convex' 
+        ? 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-pink-500 text-white border-indigo-950 shadow-md transition-all'
+        : 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-white text-pink-700 border-pink-200 hover:bg-pink-50 transition-all';
+      document.getElementById('btn-concave').className = type === 'concave' 
+        ? 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-pink-500 text-white border-indigo-950 shadow-md transition-all'
+        : 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-white text-pink-700 border-pink-200 hover:bg-pink-50 transition-all';
+      
+      updateLens();
+    }
+
+    function updateLens() {
+      lensFocal = parseInt(document.getElementById('slider-lensFocal').value);
+      lensObjectDist = parseInt(document.getElementById('slider-lensObjectDist').value);
+
+      document.getElementById('val-lensFocal').innerText = `f = ${currentLensType === 'concave' ? '-' : ''}${lensFocal} px`;
+      document.getElementById('val-lensObjectDist').innerText = `u = ${lensObjectDist} px`;
+
+      const u = lensObjectDist;
+      const f = currentLensType === 'convex' ? lensFocal : -lensFocal;
+      let v = 0;
+      let isInfinity = false;
+      let characteristics = [];
+
+      const t = i18n[currentLang];
+
+      if (u === lensFocal && currentLensType === 'convex') {
+        isInfinity = true;
+      } else {
+        v = (u * f) / (u - f);
+      }
+
+      // KSSM syllabus standard image property mappings
+      if (currentLensType === 'convex') {
+        if (u < lensFocal) {
+          characteristics = [t.virtual, t.upright, t.magnified];
+        } else if (u === lensFocal) {
+          characteristics = [t.infinityMsg];
+        } else if (u > lensFocal && u < 2 * lensFocal) {
+          characteristics = [t.real, t.inverted, t.magnified];
+        } else if (u === 2 * lensFocal) {
+          characteristics = [t.real, t.inverted, t.sameSize];
+        } else {
+          characteristics = [t.real, t.inverted, t.diminished];
+        }
+      } else {
+        characteristics = [t.virtual, t.upright, t.diminished];
+      }
+
+      document.getElementById('math-lens-u').innerText = u + ' px';
+      document.getElementById('math-lens-f').innerText = f + ' px';
+      document.getElementById('math-lens-v').innerText = isInfinity ? t.infinityMsg : v.toFixed(1) + ' px';
+      document.getElementById('math-lens-m').innerText = isInfinity ? '∞' : Math.abs(v / u).toFixed(2);
+
+      let tagsHTML = '';
+      characteristics.forEach(c => {
+        tagsHTML += `<span class="bg-white border-2 border-indigo-300 text-indigo-950 font-black px-3 py-1 rounded-full text-[10px] shadow-sm">⚡ ${c}</span>`;
+      });
+      document.getElementById('lens-characteristics-tags').innerHTML = tagsHTML;
+
+      // Coordinate systems mapping
+      const svg = document.getElementById('lens-svg');
+      const ox = 400;
+      const oy = 200;
+      const objHeight = 70;
+      const objX = ox - u;
+      const objY = oy - objHeight;
+
+      let imgX = ox + v;
+      let imgHeight = 0;
+      if (!isInfinity) {
+        imgHeight = objHeight * (-v / u);
+      }
+      const imgY = oy + imgHeight;
+
+      let rayTracingHTML = '';
+      if (currentLensType === 'convex') {
+        if (isInfinity) {
+          rayTracingHTML = `
+            <!-- Ray parallel to principal -->
+            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+            <line x1="${ox}" y1="${objY}" x2="800" y2="${oy + (800 - ox) * (objHeight / f)}" stroke="#10b981" stroke-width="2.5" />
+            <!-- Ray through center -->
+            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
+            <line x1="${ox}" y1="${oy}" x2="800" y2="${oy + (800 - ox) * (objHeight / u)}" stroke="#ec4899" stroke-width="2.5" />
+          `;
+        } else {
+          rayTracingHTML = `
+            <!-- Ray 1 -->
+            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+            <line x1="${ox}" y1="${objY}" x2="${ox + lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="2.5" />
+            <line x1="${ox + lensFocal}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#10b981" stroke-width="2.5" />
+            
+            <!-- Ray 2 -->
+            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
+            <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="2.5" />
+          `;
+          if (u < lensFocal) {
+            // Virtual light back projection
+            rayTracingHTML += `
+              <line x1="${ox}" y1="${objY}" x2="${imgX}" y2="${imgY}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
+              <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4,4" />
+            `;
+          }
+        }
+      } else {
+        // Concave diverging tracing
+        const centralProjectY = oy + (800 - ox) * ((oy - objY) / u);
+        rayTracingHTML = `
+          <!-- Ray 1 -->
+          <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+          <line x1="${ox}" y1="${objY}" x2="800" y2="${oy - (800 - ox) * ((oy - objY) / lensFocal)}" stroke="#10b981" stroke-width="2.5" />
+          <line x1="${ox}" y1="${objY}" x2="${ox - lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
+
+          <!-- Ray 2 -->
+          <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
+          <line x1="${ox}" y1="${oy}" x2="800" y2="${centralProjectY}" stroke="#ec4899" stroke-width="2.5" />
+        `;
+      }
+
+      svg.innerHTML = `
+        <!-- Principal Reference Axis -->
+        <line x1="0" y1="${oy}" x2="800" y2="${oy}" stroke="#475569" stroke-width="2" />
+        
+        <!-- Focal Point Marks -->
+        <circle cx="${ox - lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
+        <text x="${ox - lensFocal - 10}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">F</text>
+        <circle cx="${ox - 2 * lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
+        <text x="${ox - 2 * lensFocal - 15}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">2F</text>
+        <circle cx="${ox + lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
+        <text x="${ox + lensFocal - 10}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">F</text>
+        <circle cx="${ox + 2 * lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
+        <text x="${ox + 2 * lensFocal - 15}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">2F</text>
+
+        <!-- Lens Profile glass path outline -->
+        ${currentLensType === 'convex' 
+          ? `<path d="M ${ox - 15},${oy - 160} Q ${ox + 25},${oy} ${ox - 15},${oy + 160} Q ${ox - 55},${oy} ${ox - 15},${oy - 160}" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="3.5" />`
+          : `<path d="M ${ox - 25},${oy - 160} L ${ox + 5},${oy - 160} Q ${ox - 15},${oy} ${ox + 5},${oy + 160} L ${ox - 25},${oy + 160} Q ${ox - 5},${oy} ${ox - 25},${oy - 160}" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" stroke-width="3.5" />`
+        }
+
+        <!-- Interactive candle object drawing -->
+        <g id="draggable-candle" transform="translate(0,0)" style="cursor: grab;">
+          <!-- Flame aura -->
+          <rect x="${objX - 22}" y="${objY - 20}" width="44" height="${objHeight + 35}" fill="rgba(245, 158, 11, 0.04)" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="3,3" rx="8" />
+          <!-- Body -->
+          <rect x="${objX - 6}" y="${objY + 20}" width="12" height="50" fill="#f97316" rx="3" />
+          <rect x="${objX - 6}" y="${objY + 20}" width="12" height="15" fill="#ea580c" rx="1" />
+          <line x1="${objX}" y1="${objY + 20}" x2="${objX}" y2="${objY + 10}" stroke="#fcd34d" stroke-width="2" />
+          <!-- Animated Flame -->
+          <path d="M ${objX},${objY + 12} Q ${objX - 6},${objY + 4} ${objX},${objY - 8} Q ${objX + 6},${objY + 4} ${objX},${objY + 12}" fill="#f59e0b" class="glow-effect" />
+          <path d="M ${objX},${objY + 10} Q ${objX - 3},${objY + 5} ${objX},${objY - 3} Q ${objX + 3},${objY + 5} ${objX},${objY + 10}" fill="#f87171" />
+          <text x="${objX - 25}" y="${objY - 12}" fill="#f59e0b" class="text-[9px] font-black">${t.candleLabel}</text>
+        </g>
+
+        <!-- Dynamic trace paths -->
+        ${rayTracingHTML}
+
+        <!-- Output Image candle drawing -->
+        ${!isInfinity ? `
+          <g opacity="0.85">
+            <!-- Scaling dimensions according to physical ratios -->
+            <rect x="${imgX - Math.abs(6 * (imgHeight / objHeight))}" y="${imgY - (imgHeight > 0 ? 0 : Math.abs(imgHeight * 5/7))}" width="${Math.abs(12 * (imgHeight / objHeight))}" height="${Math.abs(imgHeight * 5/7)}" fill="#a855f7" rx="2" />
+            <path d="M ${imgX},${imgY - (imgHeight > 0 ? -imgHeight : imgHeight)} Q ${imgX - Math.abs(6 * (imgHeight / objHeight))},${imgY - imgHeight + (imgHeight > 0 ? 10 : -10)} ${imgX},${imgY - imgHeight} Q ${imgX + Math.abs(6 * (imgHeight / objHeight))},${imgY - imgHeight + (imgHeight > 0 ? 10 : -10)} ${imgX},${imgY - (imgHeight > 0 ? -imgHeight : imgHeight)}" fill="#f59e0b" />
+            <line x1="${imgX}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="2,2" />
+            <text x="${imgX - 30}" y="${imgY - (imgHeight > 0 ? -imgHeight - 15 : imgHeight - 15)}" fill="#a855f7" class="text-[9px] font-black">${t.imageLabel}</text>
+          </g>
+        ` : ''}
+      `;
+    }
+
+    // Touch and drag interactive handlers for Candle (Updated to dynamically handle scaled SVGs)
+    const lensSvg = document.getElementById('lens-svg');
+    lensSvg.addEventListener('mousedown', startDrag);
+    lensSvg.addEventListener('mousemove', drag);
+    window.addEventListener('mouseup', endDrag);
+
+    lensSvg.addEventListener('touchstart', startDrag);
+    lensSvg.addEventListener('touchmove', drag);
+    window.addEventListener('touchend', endDrag);
+
+    function startDrag(e) {
+      const clientX = e.clientX || e.touches[0].clientX;
+      const rect = lensSvg.getBoundingClientRect();
+      const relativeX = clientX - rect.left;
+      
+      // Calculate responsive SVG coordinates (Base view width is 800)
+      const scaleX = 800 / rect.width;
+      const svgX = relativeX * scaleX;
+      
+      const ox = 400;
+      const currentObjX = ox - lensObjectDist;
+
+      // Adjust collision zone for thumb sizes (increased to 50 on smaller screens)
+      if (Math.abs(svgX - currentObjX) < 50) {
+        isDragging = true;
+      }
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      
+      const clientX = e.clientX || (e.touches ? e.touches[0].clientX : null);
+      if (clientX === null) return;
+
+      const rect = lensSvg.getBoundingClientRect();
+      const relativeX = clientX - rect.left;
+      
+      // Calculate responsive coordinates
+      const scaleX = 800 / rect.width;
+      const svgX = relativeX * scaleX;
+      
+      const ox = 400;
+      let newU = ox - svgX;
+      if (newU < 15) newU = 15;
+      if (newU > 320) newU = 320;
+
+      lensObjectDist = Math.round(newU);
+      document.getElementById('slider-lensObjectDist').value = lensObjectDist;
+      updateLens();
+    }
+
+    function endDrag() {
+      isDragging = false;
+    }
+
+    // --- TAB 4: TELESCOPE & MICROSCOPE CONFIGURATIONS ---
+    function setInstrument(type) {
+      currentInstrument = type;
+      document.getElementById('btn-microscope').className = type === 'microscope'
+        ? 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-purple-600 text-white border-indigo-950 shadow-md transition-all'
+        : 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-white text-purple-700 border-purple-200 hover:bg-pink-50 transition-all';
+      document.getElementById('btn-telescope').className = type === 'telescope'
+        ? 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-purple-600 text-white border-indigo-950 shadow-md transition-all'
+        : 'py-2.5 px-3 rounded-xl font-bold text-xs border-2 bg-white text-purple-700 border-purple-200 hover:bg-pink-50 transition-all';
+
+      updateInstrument();
+    }
+
+    function updateInstrument() {
+      const t = i18n[currentLang];
+      const specBox = document.getElementById('inst-spec-text');
+      const svg = document.getElementById('inst-svg');
+
+      if (currentInstrument === 'microscope') {
+        specBox.innerText = t.microscopeSpec;
+
+        svg.innerHTML = `
+          <!-- Principal Axis -->
+          <line x1="0" y1="175" x2="600" y2="175" stroke="#475569" stroke-width="2" />
+          
+          <!-- Lenses -->
+          <!-- Objective Lens -->
+          <path d="M 170,50 Q 190,175 170,300 Q 155,175 170,50" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="2.5" />
+          <text x="135" y="35" fill="#38bdf8" class="text-[10px] font-black">${t.objectiveLens} (f_o)</text>
+
+          <!-- Eyepiece Lens -->
+          <path d="M 410,20 Q 435,175 410,330 Q 390,175 410,20" fill="rgba(168,85,247,0.25)" stroke="#a855f7" stroke-width="2.5" />
+          <text x="390" y="15" fill="#a855f7" class="text-[10px] font-black">${t.eyepieceLens} (f_e)</text>
+
+          <!-- Focal Markers -->
+          <circle cx="120" cy="175" r="3.5" fill="#38bdf8" />
+          <text x="115" y="195" fill="#38bdf8" class="text-[9px] font-bold">F_o</text>
+          <circle cx="230" cy="175" r="3.5" fill="#38bdf8" />
+          <text x="225" y="195" fill="#38bdf8" class="text-[9px] font-bold">F_o</text>
+          <circle cx="340" cy="175" r="3.5" fill="#a855f7" />
+          <text x="330" y="195" fill="#a855f7" class="text-[9px] font-bold">F_e</text>
+
+          <!-- Object Candle (O) -->
+          <line x1="100" y1="175" x2="100" y2="135" stroke="#f59e0b" stroke-width="3" />
+          <polygon points="100,130 97,136 103,136" fill="#f59e0b" />
+          <text x="80" y="125" fill="#f59e0b" class="text-[9px] font-black">${t.candleLabel} (O)</text>
+
+          <!-- Real Intermediate Image I1 -->
+          <line x1="310" y1="175" x2="310" y2="245" stroke="#ec4899" stroke-width="2.5" />
+          <polygon points="310,249 307,243 313,243" fill="#ec4899" />
+          <text x="275" y="260" fill="#ec4899" class="text-[9px] font-black">${t.intermediateImage}</text>
+
+          <!-- Ray Path Tracings through Objective -->
+          <line x1="100" y1="135" x2="175" y2="135" stroke="#38bdf8" stroke-width="1.5" />
+          <line x1="175" y1="135" x2="310" y2="245" stroke="#38bdf8" stroke-width="1.5" />
+          <line x1="310" y1="245" x2="420" y2="335" stroke="#38bdf8" stroke-width="1.5" />
+
+          <line x1="100" y1="135" x2="175" y2="175" stroke="#38bdf8" stroke-width="1.5" />
+          <line x1="175" y1="175" x2="310" y2="245" stroke="#38bdf8" stroke-width="1.5" />
+          <line x1="310" y1="245" x2="420" y2="305" stroke="#38bdf8" stroke-width="1.5" />
+
+          <!-- Ray Paths through Eyepiece -->
+          <line x1="310" y1="245" x2="420" y2="245" stroke="#a855f7" stroke-width="1.5" />
+          <line x1="420" y1="245" x2="490" y2="315" stroke="#a855f7" stroke-width="1.5" />
+          <line x1="420" y1="245" x2="50" y2="-125" stroke="#a855f7" stroke-width="1" stroke-dasharray="3,3" />
+
+          <line x1="310" y1="245" x2="420" y2="175" stroke="#a855f7" stroke-width="1.5" />
+          <line x1="420" y1="175" x2="490" y2="125" stroke="#a855f7" stroke-width="1.5" />
+          <line x1="420" y1="175" x2="50" y2="415" stroke="#a855f7" stroke-width="1" stroke-dasharray="3,3" />
+
+          <!-- Highly Magnified Final virtual image -->
+          <line x1="80" y1="175" x2="80" y2="310" stroke="#ea580c" stroke-width="3" stroke-dasharray="3,3" />
+          <polygon points="80,314 76,308 84,308" fill="#ea580c" />
+          <text x="40" y="325" fill="#ea580c" class="text-[9px] font-black">${t.finalImage} (Virtual)</text>
+
+          <!-- Observer's Eye vector graphic -->
+          <g transform="translate(510, 200)">
+            <path d="M 0,0 Q 15,-15 30,0 Q 15,15 0,0 Z" fill="none" stroke="#ffffff" stroke-width="2" />
+            <circle cx="15" cy="0" r="5" fill="#38bdf8" />
+          </g>
+        `;
+      } else {
+        specBox.innerText = t.telescopeSpec;
+
+        svg.innerHTML = `
+          <!-- Principal Axis -->
+          <line x1="0" y1="175" x2="600" y2="175" stroke="#475569" stroke-width="2" />
+
+          <!-- Lenses -->
+          <!-- Objective Lens -->
+          <path d="M 140,20 Q 175,175 140,330 Q 130,175 140,20" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="2.5" />
+          <text x="110" y="15" fill="#38bdf8" class="text-[10px] font-black">${t.objectiveLens} (f_o)</text>
+
+          <!-- Eyepiece Lens -->
+          <path d="M 440,45 Q 465,175 440,305 Q 430,175 440,45" fill="rgba(168,85,247,0.25)" stroke="#a855f7" stroke-width="2.5" />
+          <text x="420" y="35" fill="#a855f7" class="text-[10px] font-black">${t.eyepieceLens} (f_e)</text>
+
+          <!-- Coincident focal point (F_o / F_e) -->
+          <circle cx="340" cy="175" r="4.5" fill="#f43f5e" />
+          <text x="320" y="195" fill="#f43f5e" class="text-[10px] font-black">F_o / F_e</text>
+
+          <!-- Intermediate Image formed at focus -->
+          <line x1="340" y1="175" x2="340" y2="225" stroke="#ec4899" stroke-width="2.5" />
+          <polygon points="340,229 337,223 343,223" fill="#ec4899" />
+          <text x="315" y="240" fill="#ec4899" class="text-[9px] font-black">${t.intermediateImage}</text>
+
+          <!-- Parallel rays from infinite source -->
+          <line x1="0" y1="70" x2="150" y2="120" stroke="#38bdf8" stroke-width="2" />
+          <line x1="150" y1="120" x2="340" y2="225" stroke="#38bdf8" stroke-width="2" />
+          <line x1="340" y1="225" x2="450" y2="285" stroke="#38bdf8" stroke-width="2" />
+
+          <line x1="0" y1="125" x2="150" y2="175" stroke="#38bdf8" stroke-width="2" />
+          <line x1="150" y1="175" x2="450" y2="275" stroke="#38bdf8" stroke-width="2" />
+
+          <!-- Outgoing parallel rays traveling into eye -->
+          <line x1="450" y1="285" x2="520" y2="250" stroke="#a855f7" stroke-width="2" />
+          <line x1="450" y1="275" x2="520" y2="240" stroke="#a855f7" stroke-width="2" />
+
+          <!-- Dashed lines showing projection to infinity -->
+          <line x1="450" y1="285" x2="250" y2="385" stroke="#ea580c" stroke-width="1" stroke-dasharray="3,3" />
+          <line x1="450" y1="275" x2="250" y2="375" stroke="#ea580c" stroke-width="1" stroke-dasharray="3,3" />
+          <text x="210" y="360" fill="#ea580c" class="text-[9px] font-black tracking-wider rotate-[26deg]">${t.finalImage} (at Infinity)</text>
+
+          <!-- Eye Graphic -->
+          <g transform="translate(530, 220)">
+            <path d="M 0,0 Q 15,-15 30,0 Q 15,15 0,0 Z" fill="none" stroke="#ffffff" stroke-width="2" />
+            <circle cx="15" cy="0" r="5" fill="#38bdf8" />
+          </g>
+        `;
+      }
+    }
+
+    // Set everything up on initial load
+    window.onload = function() {
+      translateUI();
+      updateRefraction();
+      updateTIR();
+      updateLens();
+      updateInstrument();
+    };
+  </script>
+</body>
+</html>
+
+```
