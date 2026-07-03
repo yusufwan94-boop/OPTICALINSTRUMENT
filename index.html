@@ -17,7 +17,7 @@
     .title-font {
       font-family: 'Fredoka One', cursive;
     }
-    /* Mobile-optimized, touch-friendly range slider thumb */
+    /* Mobile-optimized range slider styling */
     input[type="range"]::-webkit-slider-thumb {
       background: #ec4899;
       border: 3px solid #ffffff;
@@ -68,7 +68,7 @@
   <header class="bg-white border-b-4 border-yellow-300 shadow-md sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-3 text-center md:text-left flex-col md:flex-row">
-        <!-- Playful Sun Logo (Pure inline CSS/SVG) -->
+        <!-- Playful Sun Logo -->
         <div class="bg-gradient-to-tr from-yellow-400 to-pink-500 p-2.5 rounded-2xl shadow-lg text-white transform rotate-3">
           <svg class="w-8 h-8 animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
@@ -96,7 +96,7 @@
   <!-- MAIN WRAPPER -->
   <main class="max-w-6xl mx-auto px-4 mt-6">
     
-    <!-- STYLISH TAB NAVIGATION (KSSM CHAPTER 6 TOPICS) -->
+    <!-- STYLISH TAB NAVIGATION -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-6">
       <button onclick="switchTab('refraction')" id="tab-refraction" class="tab-btn flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:p-4 rounded-3xl transition-all duration-300 border-4 border-indigo-950 bg-gradient-to-br from-blue-400 to-cyan-400 text-white shadow-xl scale-102">
         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -135,7 +135,6 @@
       <div id="content-refraction" class="tab-content">
         <div class="flex flex-col lg:flex-row gap-6 items-stretch">
           
-          <!-- LEFT: Side Panel Controls & Formula Information -->
           <div class="w-full lg:w-1/3 bg-blue-50/80 p-5 rounded-2xl border-2 border-blue-200 flex flex-col justify-between">
             <div>
               <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
@@ -148,7 +147,7 @@
                 Observe how light bends towards the normal when entering a denser medium (glass), and bends away from the normal when exiting.
               </p>
 
-              <!-- Angle of Incidence (i) Control -->
+              <!-- Angle of Incidence (i) -->
               <div class="mb-5">
                 <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
                   <span id="lbl-inc-angle">Angle of Incidence (i)</span>
@@ -161,21 +160,17 @@
                 </div>
               </div>
 
-              <!-- Refractive Index (n) Control -->
+              <!-- Refractive Index (n) -->
               <div class="mb-6">
                 <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
                   <span id="lbl-ref-index">Refractive Index of Glass (n)</span>
                   <span id="val-refIndex" class="text-indigo-600 text-sm bg-indigo-100 px-2.5 py-0.5 rounded-md font-bold">n = 1.50</span>
                 </div>
                 <input type="range" id="slider-refIndex" min="1.1" max="2.0" step="0.05" value="1.50" oninput="updateRefraction()" class="w-full h-3 bg-indigo-200 rounded-lg appearance-none cursor-pointer">
-                <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
-                  <span>n = 1.10</span>
-                  <span>n = 2.00</span>
-                </div>
               </div>
             </div>
 
-            <!-- Snell's Law Math Box -->
+            <!-- Snell's Law Formula Block -->
             <div class="bg-white p-4 rounded-xl border-2 border-indigo-100 text-xs">
               <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5">
                 <svg class="w-4 h-4 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -200,7 +195,7 @@
             </div>
           </div>
 
-          <!-- RIGHT: Interactive SVG Ray Diagram -->
+          <!-- RIGHT: Glass Block Diagram -->
           <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
             <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center">
               <div class="w-full flex justify-between text-xs font-bold text-white mb-2 px-2">
@@ -208,13 +203,12 @@
                 <span class="text-amber-400">💎 <span id="text-glass1">Glass Block</span></span>
               </div>
 
-              <!-- SVG Viewport configured with fluid viewBox -->
               <svg id="refraction-svg" viewBox="0 0 500 400" class="w-full h-auto max-w-lg bg-slate-900 rounded-xl">
-                <!-- Programmatically populated by updateRefraction() -->
+                <!-- Populated dynamically -->
               </svg>
             </div>
 
-            <!-- Color Legends -->
+            <!-- Legends -->
             <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs font-bold px-2 text-center">
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> <span id="lbl-leg-inc">Incident Ray</span> (i)</span>
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> <span id="lbl-leg-ref">Refracted Ray</span> (r)</span>
@@ -228,7 +222,6 @@
       <div id="content-tir" class="tab-content hidden">
         <div class="flex flex-col lg:flex-row gap-6 items-stretch">
           
-          <!-- LEFT: Semicircular controls -->
           <div class="w-full lg:w-1/3 bg-teal-50/80 p-5 rounded-2xl border-2 border-teal-200 flex flex-col justify-between">
             <div>
               <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
@@ -254,7 +247,7 @@
                 </div>
               </div>
 
-              <!-- Refractive index of dense block -->
+              <!-- Refractive index of block -->
               <div class="mb-6">
                 <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
                   <span id="lbl-tir-n">Refractive Index of Glass (n)</span>
@@ -297,11 +290,11 @@
               </div>
 
               <svg id="tir-svg" viewBox="0 0 500 400" class="w-full h-auto max-w-lg bg-slate-900 rounded-xl">
-                <!-- Programmatically populated by updateTIR() -->
+                <!-- Dynamic Semicircle SVG -->
               </svg>
             </div>
 
-            <!-- Color Legends -->
+            <!-- Legends -->
             <div class="flex flex-wrap justify-center gap-3 mt-4 text-xs font-bold px-2 text-center">
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-400 inline-block"></span> <span id="lbl-leg-inc2">Incident Ray</span></span>
               <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span> <span id="lbl-leg-ref2">Refracted Ray</span></span>
@@ -329,7 +322,7 @@
                 Drag the orange candle or use the sliders to explore image formation and thin lens calculations in real-time.
               </p>
 
-              <!-- Lens Choice (Convex vs. Concave) -->
+              <!-- Lens Choice -->
               <div class="mb-4">
                 <label class="block text-xs font-black text-indigo-950 mb-1.5" id="lbl-lens-type">Select Lens Type</label>
                 <div class="grid grid-cols-2 gap-2">
@@ -342,7 +335,7 @@
                 </div>
               </div>
 
-              <!-- Focal Length (f) Selector -->
+              <!-- Focal Length (f) -->
               <div class="mb-4">
                 <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
                   <span id="lbl-focal-len">Focal Length (f)</span>
@@ -351,7 +344,7 @@
                 <input type="range" id="slider-lensFocal" min="50" max="110" value="80" oninput="updateLens()" class="w-full h-3 bg-pink-200 rounded-lg appearance-none cursor-pointer">
               </div>
 
-              <!-- Object distance (u) Slider -->
+              <!-- Object distance (u) -->
               <div class="mb-5">
                 <div class="flex justify-between text-xs font-black text-indigo-900 mb-1">
                   <span id="lbl-obj-dist">Object Distance (u)</span>
@@ -365,7 +358,7 @@
               </div>
             </div>
 
-            <!-- Formula Application sandbox -->
+            <!-- Thin Lens Equation Box -->
             <div class="bg-white p-4 rounded-xl border-2 border-pink-100 text-xs">
               <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5">
                 <svg class="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -387,14 +380,14 @@
                 <div class="mt-3 p-3 bg-indigo-50 border-2 border-indigo-200 rounded-lg text-indigo-950">
                   <span class="block text-[10px] font-black uppercase text-indigo-600 mb-1" id="lbl-img-char">Image Characteristics:</span>
                   <div id="lens-characteristics-tags" class="flex flex-wrap gap-1.5">
-                    <!-- Updated via JS -->
+                    <!-- Loaded via JS -->
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- RIGHT: Interactive Ray Drawing Area with Candle illustration -->
+          <!-- RIGHT: Interactive Ray Drawing Area -->
           <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
             <div class="text-center mb-2 px-2">
               <span id="drag-hint" class="text-xs bg-pink-100 text-pink-800 border-2 border-pink-300 font-extrabold px-3 py-1.5 rounded-full animate-bounce inline-block">
@@ -403,9 +396,9 @@
             </div>
 
             <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center select-none">
-              <!-- Interactive Workspace SVG (Width: 800) -->
+              <!-- Interactive Workspace SVG (Width: 800, Height: 400) -->
               <svg id="lens-svg" viewBox="0 0 800 400" class="w-full h-auto max-w-2xl bg-slate-900 rounded-xl" style="cursor: grab;">
-                <!-- Filled dynamically and allows mouse dragging -->
+                <!-- Redrawn in real-time -->
               </svg>
             </div>
 
@@ -423,7 +416,6 @@
       <div id="content-instruments" class="tab-content hidden">
         <div class="flex flex-col lg:flex-row gap-6 items-stretch">
           
-          <!-- LEFT: Syllabus configurations details -->
           <div class="w-full lg:w-1/3 bg-purple-50/80 p-5 rounded-2xl border-2 border-purple-200 flex flex-col justify-between">
             <div>
               <h3 class="text-xl font-extrabold text-indigo-950 mb-3 flex items-center gap-2 title-font">
@@ -436,7 +428,7 @@
                 Explore how double-lens configurations (Microscopes & Telescopes) are engineered under the KSSM syllabus.
               </p>
 
-              <!-- Instruments Selection toggle -->
+              <!-- Instrument toggle -->
               <div class="mb-4">
                 <label class="block text-xs font-black text-indigo-950 mb-1.5" id="lbl-inst-type">Select Instrument</label>
                 <div class="grid grid-cols-2 gap-2">
@@ -450,7 +442,7 @@
               </div>
             </div>
 
-            <!-- Detailed criteria constraints according to KSSM syllabus guidelines -->
+            <!-- KSSM syllabus guidelines -->
             <div class="bg-white p-4 rounded-xl border-2 border-purple-100 text-xs">
               <div class="font-extrabold text-indigo-950 mb-2 flex items-center gap-1.5 text-purple-700">
                 <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -464,12 +456,11 @@
             </div>
           </div>
 
-          <!-- RIGHT: Diagram of the compound instruments -->
+          <!-- RIGHT: Optical Instruments Diagram -->
           <div class="w-full lg:w-2/3 flex flex-col items-center justify-center">
             <div class="bg-slate-950 w-full rounded-2xl p-3 sm:p-4 border-4 border-indigo-950 shadow-inner flex flex-col items-center">
-              <!-- Responsive SVG Drawing with fluid scaling -->
               <svg id="inst-svg" viewBox="0 0 600 350" class="w-full h-auto max-w-xl bg-slate-900 rounded-xl">
-                <!-- Dynamically drawn via updateInstrument() -->
+                <!-- Populated dynamically -->
               </svg>
             </div>
           </div>
@@ -487,7 +478,7 @@
       </div>
     </div>
 
-    <!-- FUN FOOTER -->
+    <!-- FOOTER -->
     <footer class="text-center mt-8 text-xs text-slate-500 font-extrabold">
       <p id="author-notes" class="bg-white border-2 border-indigo-950 inline-block px-4 py-2 rounded-full shadow-md text-indigo-950">
         Designed for Malaysian High School Students with Cheerful Physics Spirit! 🚀✨
@@ -495,9 +486,7 @@
     </footer>
   </main>
 
-  <!-- PHYSICS SIMULATION ENGINE (VANILLA JAVASCRIPT) -->
   <script>
-    // Dual Language Dictionary for instantaneous language toggling
     const i18n = {
       en: {
         title: "OptiSains Simulator",
@@ -508,7 +497,6 @@
         navLenses: "Interactive Lenses",
         navInstruments: "Optical Instruments",
 
-        // Glass Block Tab
         refractionTitle: "Light Refraction in Glass Block",
         refractionDesc: "Observe how light bends towards the normal when entering a denser medium (glass), and bends away from the normal when exiting back to the air.",
         incidenceAngle: "Angle of Incidence (i)",
@@ -523,7 +511,6 @@
         towardsNormal: "* Refracted ray bends TOWARDS normal line (r < i)",
         awayNormal: "* Refracted ray bends AWAY from normal line",
 
-        // Semicircular Total Internal Reflection Tab
         tirTitle: "Total Internal Reflection (Semicircular Block)",
         tirDesc: "Light travels from glass (denser) to air (less dense). Adjust the angle to witness the exact moment of Total Internal Reflection (TIR) when the critical angle is exceeded!",
         criticalAngle: "Critical Angle (c)",
@@ -531,7 +518,6 @@
         stateEqual: "Boundary (i = c): Light refracts at 90°, skimming along the flat boundary.",
         stateMore: "TIR (i > c): Light reflects completely back inside the glass. Total Internal Reflection achieved!",
 
-        // Interactive Thin Lenses Tab
         lensTitle: "Image Formation by Thin Lenses",
         lensDesc: "Drag the orange candle or use the sliders to explore image formation and thin lens calculations in real-time.",
         lensType: "Select Lens Type",
@@ -557,7 +543,6 @@
         far: "Far (u > 2f)",
         dragHint: "Tip: You can drag the orange candle directly inside the diagram below!",
 
-        // Optical Instruments Tab
         instTitle: "Applications of Lenses (Instruments)",
         instDesc: "Explore how double-lens configurations (Microscopes & Telescopes) are engineered under the KSSM syllabus.",
         instType: "Select Instrument",
@@ -570,7 +555,6 @@
         intermediateImage: "First Image (I₁)",
         finalImage: "Final Image (I₂)",
 
-        // Tips
         tipTitle: "KSSM Study Tip",
         tipRefraction: "Refractive index 'n' has no unit. It is a ratio of light speeds or sines of angles!",
         tipTIR: "Rainbows, optical fiber cables, and mirages are all natural/technological phenomena based on Total Internal Reflection!",
@@ -587,7 +571,6 @@
         navInstruments: "Alatan Optik",
         langBtn: "English",
 
-        // Glass Block Tab
         refractionTitle: "Pembiasan Cahaya dalam Bongkah Kaca",
         refractionDesc: "Perhatikan bagaimana cahaya membengkok mendekati garis normal apabila memasuki medium lebih tumpat (kaca), dan membengkok menjauhi normal apabila keluar.",
         incidenceAngle: "Sudut Tuju (i)",
@@ -602,7 +585,6 @@
         towardsNormal: "* Sinar biasan membengkok MENDEKATI normal (r < i)",
         awayNormal: "* Sinar biasan membengkok MENJAUHI normal",
 
-        // Total Internal Reflection Tab
         tirTitle: "Pantulan Dalam Penuh (Bongkah Semibulatan)",
         tirDesc: "Cahaya bergerak dari kaca (lebih tumpat) ke udara (kurang tumpat). Laraskan sudut untuk menyaksikan PDP berlaku apabila sudut tuju melebihi sudut genting!",
         criticalAngle: "Sudut Genting (c)",
@@ -610,7 +592,6 @@
         stateEqual: "Sempadan (i = c): Sinar terbias pada sudut 90° sepanjang permukaan rata.",
         stateMore: "PDP (i > c): Cahaya dipantulkan semula ke dalam kaca. Pantulan Dalam Penuh tercapai!",
 
-        // Interactive Lenses Tab
         lensTitle: "Pembentukan Imej oleh Kanta Nipis",
         lensDesc: "Seret lilin oren atau guna pelaras untuk meneroka pembentukan imej dan pengiraan kanta nipis dalam masa nyata.",
         lensType: "Pilih Jenis Kanta",
@@ -636,7 +617,6 @@
         far: "Jauh (u > 2f)",
         dragHint: "Tip: Anda boleh seret lilin oren terus pada rajah kanta di bawah!",
 
-        // Optical Instruments Tab
         instTitle: "Aplikasi Kanta (Alatan Optik)",
         instDesc: "Terokai gabungan sistem dua kanta (Mikroskop & Teleskop) mengikut sukatan pelajaran KSSM Fizik.",
         instType: "Pilih Alatan Optik",
@@ -649,7 +629,6 @@
         intermediateImage: "Imej Pertama (I₁)",
         finalImage: "Imej Akhir (I₂)",
 
-        // Tips
         tipTitle: "Tip Belajar KSSM",
         tipRefraction: "Indeks biasan 'n' tidak mempunyai unit! Ia merupakan nisbah laju cahaya atau sinus sudut sahaja.",
         tipTIR: "Pelangi, kabel gentian optik, dan logamaya merupakan fenomena semula jadi berasaskan Pantulan Dalam Penuh!",
@@ -659,7 +638,6 @@
       }
     };
 
-    // Application state
     let currentLang = 'en';
     let currentTab = 'refraction';
     let currentLensType = 'convex';
@@ -674,7 +652,6 @@
 
     let isDragging = false;
 
-    // Handles bilingual toggling
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'bm' : 'en';
       translateUI();
@@ -684,20 +661,17 @@
       updateInstrument();
     }
 
-    // Dynamic UI Translation
     function translateUI() {
       const t = i18n[currentLang];
       document.getElementById('header-title').innerText = t.title;
       document.getElementById('header-subtitle').innerText = t.subtitle;
       document.getElementById('lang-btn-text').innerText = t.langBtn;
 
-      // Tab Buttons
       document.getElementById('nav-refraction').innerText = t.navRefraction;
       document.getElementById('nav-tir').innerText = t.navTIR;
       document.getElementById('nav-lenses').innerText = t.navLenses;
       document.getElementById('nav-instruments').innerText = t.navInstruments;
 
-      // Refraction Panel Text
       document.getElementById('refraction-title').innerText = t.refractionTitle;
       document.getElementById('refraction-desc').innerText = t.refractionDesc;
       document.getElementById('lbl-inc-angle').innerText = t.incidenceAngle;
@@ -709,7 +683,6 @@
       document.getElementById('lbl-leg-ref').innerText = t.refractedRay;
       document.getElementById('lbl-leg-eme').innerText = t.emergentRay;
 
-      // TIR Panel Text
       document.getElementById('tir-title').innerText = t.tirTitle;
       document.getElementById('tir-desc').innerText = t.tirDesc;
       document.getElementById('lbl-tir-i').innerText = t.incidenceAngle;
@@ -721,7 +694,6 @@
       document.getElementById('lbl-leg-ref2').innerText = t.refractedRay;
       document.getElementById('lbl-leg-refl').innerText = t.reflectedRay;
 
-      // Lens Panel Text
       document.getElementById('lens-title').innerText = t.lensTitle;
       document.getElementById('lens-desc').innerText = t.lensDesc;
       document.getElementById('lbl-lens-type').innerText = t.lensType;
@@ -742,7 +714,6 @@
       document.getElementById('lbl-leg-p2').innerText = t.normalLine;
       document.getElementById('lbl-leg-img').innerText = t.imageLabel;
 
-      // Instruments Tab Text
       document.getElementById('inst-title').innerText = t.instTitle;
       document.getElementById('inst-desc').innerText = t.instDesc;
       document.getElementById('lbl-inst-type').innerText = t.instType;
@@ -750,12 +721,10 @@
       document.getElementById('text-telescope').innerText = t.telescope;
       document.getElementById('lbl-kssm-spec').innerText = "KSSM Specs:";
 
-      // Footer
       document.getElementById('author-notes').innerText = t.authorNotes;
       updateTipText();
     }
 
-    // Dynamic educational study tip selector
     function updateTipText() {
       const t = i18n[currentLang];
       document.getElementById('tips-header').innerText = t.tipTitle;
@@ -770,7 +739,6 @@
       }
     }
 
-    // Navigational tab switcher
     function switchTab(tabId) {
       currentTab = tabId;
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -798,7 +766,6 @@
       document.getElementById('val-refIncidence').innerText = refIncidence + '°';
       document.getElementById('val-refIndex').innerText = 'n = ' + refIndex.toFixed(2);
 
-      // Snell's Law Math logic
       const iRad = refIncidence * Math.PI / 180;
       const sinI = Math.sin(iRad);
       const sinR = sinI / refIndex;
@@ -818,7 +785,6 @@
         tipText.innerText = "* " + (currentLang === 'en' ? 'Light travels straight without bending' : 'Cahaya bergerak lurus tanpa membengkok');
       }
 
-      // Drawing the SVG Diagram elements dynamically
       const svg = document.getElementById('refraction-svg');
       const entryX = 250;
       const entryY = 120;
@@ -838,40 +804,30 @@
       const originalPathEndX = entryX + (260 * Math.tan(iRad));
 
       let svgHTML = `
-        <!-- Glass block graphic representation -->
         <rect x="50" y="120" width="400" height="160" fill="rgba(147, 197, 253, 0.25)" stroke="#60a5fa" stroke-width="4" rx="4" />
         <text x="70" y="150" fill="#93c5fd" class="text-xs font-black tracking-widest uppercase opacity-75">${t.glass}</text>
 
-        <!-- Normal Lines -->
         <line x1="250" y1="20" x2="250" y2="220" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
         <text x="255" y="40" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
         <line x1="${exitX}" y1="180" x2="${exitX}" y2="380" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
         <text x="${exitX + 5}" y="370" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
 
-        <!-- Unbent projection indicator -->
         <line x1="${entryX}" y1="${entryY}" x2="${originalPathEndX}" y2="380" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="4,4" />
 
-        <!-- Physics Light Ray drawings -->
-        <!-- Incident -->
         <line x1="${startX}" y1="${startY}" x2="${entryX}" y2="${entryY}" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" class="glow-effect" />
         <circle cx="${entryX}" cy="${entryY}" r="5" fill="#f59e0b" />
         
-        <!-- Refracted -->
         <line x1="${entryX}" y1="${entryY}" x2="${exitX}" y2="${exitY}" stroke="#10b981" stroke-width="4.5" stroke-linecap="round" />
         <circle cx="${exitX}" cy="${exitY}" r="5" fill="#10b981" />
         
-        <!-- Emergent -->
         <line x1="${exitX}" y1="${exitY}" x2="${endX}" y2="${endY}" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" />
       `;
 
-      // Draw arcs if angles are broad
       if (refIncidence > 5) {
         svgHTML += `
-          <!-- Arc for i -->
           <path d="M 250,80 A 40,40 0 0,0 ${250 - 40 * Math.sin(iRad)},${120 - 40 * Math.cos(iRad)}" fill="none" stroke="#f59e0b" stroke-width="2" />
           <text x="${entryX - 25}" y="${entryY - 20}" fill="#f59e0b" class="text-xs font-bold">i</text>
           
-          <!-- Arc for r -->
           <path d="M 250,160 A 40,40 0 0,1 ${250 + 40 * Math.sin(rRad)},${120 + 40 * Math.cos(rRad)}" fill="none" stroke="#10b981" stroke-width="2" />
           <text x="${entryX + 15}" y="${entryY + 30}" fill="#10b981" class="text-xs font-bold">r</text>
         `;
@@ -912,7 +868,6 @@
         statusBox.innerText = t.stateLess;
       }
 
-      // Semicircular glass calculations
       const svg = document.getElementById('tir-svg');
       const cx = 250;
       const cy = 200;
@@ -925,7 +880,6 @@
       let reflectedRayHTML = '';
 
       if (isTIR) {
-        // Reflection ray
         const refX = cx + r * Math.sin(iRad);
         const refY = cy + r * Math.cos(iRad);
         reflectedRayHTML = `
@@ -934,7 +888,6 @@
           <text x="${cx + 15}" y="${cy + 50}" fill="#ef4444" class="text-xs font-bold">r (= i)</text>
         `;
       } else {
-        // Refraction ray
         const sinR = tirIndex * Math.sin(iRad);
         const rRad = Math.asin(Math.min(sinR, 1.0));
         const refX = cx + r * Math.sin(rRad);
@@ -951,7 +904,6 @@
           `;
         }
 
-        // Weak reflection ray representing boundary leakage
         const reflX = cx + r * Math.sin(iRad);
         const reflY = cy + r * Math.cos(iRad);
         reflectedRayHTML = `
@@ -965,11 +917,9 @@
         <text x="120" y="280" fill="#93c5fd" class="text-xs font-black tracking-widest uppercase opacity-75">${t.glass}</text>
         <text x="120" y="100" fill="#38bdf8" class="text-xs font-black tracking-widest uppercase opacity-50">${t.air}</text>
 
-        <!-- Normal perpendicular reference -->
         <line x1="250" y1="30" x2="250" y2="370" stroke="#f43f5e" stroke-width="2" stroke-dasharray="6,4" />
         <text x="255" y="50" fill="#f43f5e" class="text-[10px] font-bold">${t.normalLine}</text>
 
-        <!-- Incident light path -->
         <line x1="${startX}" y1="${startY}" x2="${cx}" y2="${cy}" stroke="#38bdf8" stroke-width="4.5" stroke-linecap="round" class="glow-effect" />
         <circle cx="${cx}" cy="${cy}" r="5" fill="#f59e0b" />
         ${tirIncidence > 3 ? `<path d="M 250,240 A 40,40 0 0,1 ${250 - 40 * Math.sin(iRad)},${200 + 40 * Math.cos(iRad)}" fill="none" stroke="#38bdf8" stroke-width="2" />` : ''}
@@ -981,6 +931,58 @@
     }
 
     // --- TAB 3: THIN LENSES WORKSPACE ---
+    // Helper function to draw upright or inverted candle objects cleanly without scaling transform bugs
+    function drawCandle(x, height, isImage, label) {
+      const absH = Math.abs(height);
+      const isUpright = height >= 0;
+      const oy = 200;
+      
+      const candleWidth = Math.max(8, Math.min(18, 14 * (absH / 70)));
+      const flameHeight = Math.max(10, Math.min(28, 22 * (absH / 70)));
+      
+      const bodyY = isUpright ? (oy - absH) : oy;
+      const bodyH = absH;
+      
+      const wickX = x;
+      const wickY1 = isUpright ? (oy - absH) : (oy + absH);
+      const wickY2 = isUpright ? (oy - absH - 8) : (oy + absH + 8);
+      
+      const flameTipY = isUpright ? (wickY2 - flameHeight) : (wickY2 + flameHeight);
+      
+      const color = isImage ? "#a855f7" : "#f97316"; 
+      const glowClass = isImage ? "" : "glow-effect";
+
+      let flamePath = "";
+      if (isUpright) {
+        flamePath = `M ${x},${wickY2} Q ${x - candleWidth/2},${wickY2 - flameHeight*0.4} ${x},${flameTipY} Q ${x + candleWidth/2},${wickY2 - flameHeight*0.4} ${x},${wickY2}`;
+      } else {
+        flamePath = `M ${x},${wickY2} Q ${x - candleWidth/2},${wickY2 + flameHeight*0.4} ${x},${flameTipY} Q ${x + candleWidth/2},${wickY2 + flameHeight*0.4} ${x},${wickY2}`;
+      }
+
+      const innerFlameHeight = flameHeight * 0.6;
+      const innerFlameTipY = isUpright ? (wickY2 - innerFlameHeight) : (wickY2 + innerFlameHeight);
+      let innerFlamePath = "";
+      if (isUpright) {
+        innerFlamePath = `M ${x},${wickY2} Q ${x - candleWidth*0.25},${wickY2 - innerFlameHeight*0.4} ${x},${innerFlameTipY} Q ${x + candleWidth*0.25},${wickY2 - innerFlameHeight*0.4} ${x},${wickY2}`;
+      } else {
+        innerFlamePath = `M ${x},${wickY2} Q ${x - candleWidth*0.25},${wickY2 + innerFlameHeight*0.4} ${x},${innerFlameTipY} Q ${x + candleWidth*0.25},${wickY2 + innerFlameHeight*0.4} ${x},${wickY2}`;
+      }
+
+      return `
+        <g opacity="${isImage ? 0.75 : 1}">
+          <!-- Candle Body -->
+          <rect x="${x - candleWidth/2}" y="${bodyY}" width="${candleWidth}" height="${bodyH}" fill="${color}" rx="3" />
+          <!-- Wick -->
+          <line x1="${wickX}" y1="${wickY1}" x2="${wickX}" y2="${wickY2}" stroke="#fcd34d" stroke-width="2" />
+          <!-- Flame -->
+          <path d="${flamePath}" fill="#f59e0b" class="${glowClass}" />
+          <path d="${innerFlamePath}" fill="#f87171" opacity="0.8" />
+          <!-- Label -->
+          <text x="${x}" y="${isUpright ? (bodyY - 15) : (bodyY + bodyH + 25)}" fill="${color}" class="text-[10px] font-black text-center" text-anchor="middle">${label}</text>
+        </g>
+      `;
+    }
+
     function setLensType(type) {
       currentLensType = type;
       document.getElementById('btn-convex').className = type === 'convex' 
@@ -1014,7 +1016,6 @@
         v = (u * f) / (u - f);
       }
 
-      // KSSM syllabus standard image property mappings
       if (currentLensType === 'convex') {
         if (u < lensFocal) {
           characteristics = [t.virtual, t.upright, t.magnified];
@@ -1042,7 +1043,6 @@
       });
       document.getElementById('lens-characteristics-tags').innerHTML = tagsHTML;
 
-      // Coordinate systems mapping
       const svg = document.getElementById('lens-svg');
       const ox = 400;
       const oy = 200;
@@ -1053,106 +1053,116 @@
       let imgX = ox + v;
       let imgHeight = 0;
       if (!isInfinity) {
-        imgHeight = objHeight * (-v / u);
+        imgHeight = objHeight * (-v / u); // Magnification formula
       }
       const imgY = oy + imgHeight;
 
-      let rayTracingHTML = '';
-      if (currentLensType === 'convex') {
-        if (isInfinity) {
-          rayTracingHTML = `
-            <!-- Ray parallel to principal -->
-            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
-            <line x1="${ox}" y1="${objY}" x2="800" y2="${oy + (800 - ox) * (objHeight / f)}" stroke="#10b981" stroke-width="2.5" />
-            <!-- Ray through center -->
-            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
-            <line x1="${ox}" y1="${oy}" x2="800" y2="${oy + (800 - ox) * (objHeight / u)}" stroke="#ec4899" stroke-width="2.5" />
-          `;
-        } else {
-          rayTracingHTML = `
-            <!-- Ray 1 -->
-            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
-            <line x1="${ox}" y1="${objY}" x2="${ox + lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="2.5" />
-            <line x1="${ox + lensFocal}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#10b981" stroke-width="2.5" />
-            
-            <!-- Ray 2 -->
-            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
-            <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="2.5" />
-          `;
-          if (u < lensFocal) {
-            // Virtual light back projection
-            rayTracingHTML += `
-              <line x1="${ox}" y1="${objY}" x2="${imgX}" y2="${imgY}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
-              <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4,4" />
-            `;
-          }
-        }
-      } else {
-        // Concave diverging tracing
-        const centralProjectY = oy + (800 - ox) * ((oy - objY) / u);
-        rayTracingHTML = `
-          <!-- Ray 1 -->
-          <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
-          <line x1="${ox}" y1="${objY}" x2="800" y2="${oy - (800 - ox) * ((oy - objY) / lensFocal)}" stroke="#10b981" stroke-width="2.5" />
-          <line x1="${ox}" y1="${objY}" x2="${ox - lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
-
-          <!-- Ray 2 -->
-          <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
-          <line x1="${ox}" y1="${oy}" x2="800" y2="${centralProjectY}" stroke="#ec4899" stroke-width="2.5" />
-        `;
-      }
-
-      svg.innerHTML = `
+      let svgContent = `
         <!-- Principal Reference Axis -->
         <line x1="0" y1="${oy}" x2="800" y2="${oy}" stroke="#475569" stroke-width="2" />
         
         <!-- Focal Point Marks -->
         <circle cx="${ox - lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
-        <text x="${ox - lensFocal - 10}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">F</text>
+        <text x="${ox - lensFocal}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black text-center" text-anchor="middle">F</text>
         <circle cx="${ox - 2 * lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
-        <text x="${ox - 2 * lensFocal - 15}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">2F</text>
+        <text x="${ox - 2 * lensFocal}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black text-center" text-anchor="middle">2F</text>
         <circle cx="${ox + lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
-        <text x="${ox + lensFocal - 10}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">F</text>
+        <text x="${ox + lensFocal}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black text-center" text-anchor="middle">F</text>
         <circle cx="${ox + 2 * lensFocal}" cy="${oy}" r="4.5" fill="#a855f7" />
-        <text x="${ox + 2 * lensFocal - 15}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black">2F</text>
+        <text x="${ox + 2 * lensFocal}" y="${oy + 20}" fill="#a855f7" class="text-xs font-black text-center" text-anchor="middle">2F</text>
 
-        <!-- Lens Profile glass path outline -->
+        <!-- Lens Silhouette -->
         ${currentLensType === 'convex' 
           ? `<path d="M ${ox - 15},${oy - 160} Q ${ox + 25},${oy} ${ox - 15},${oy + 160} Q ${ox - 55},${oy} ${ox - 15},${oy - 160}" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="3.5" />`
           : `<path d="M ${ox - 25},${oy - 160} L ${ox + 5},${oy - 160} Q ${ox - 15},${oy} ${ox + 5},${oy + 160} L ${ox - 25},${oy + 160} Q ${ox - 5},${oy} ${ox - 25},${oy - 160}" fill="rgba(244, 63, 94, 0.2)" stroke="#f43f5e" stroke-width="3.5" />`
         }
 
-        <!-- Interactive candle object drawing -->
-        <g id="draggable-candle" transform="translate(0,0)" style="cursor: grab;">
-          <!-- Flame aura -->
-          <rect x="${objX - 22}" y="${objY - 20}" width="44" height="${objHeight + 35}" fill="rgba(245, 158, 11, 0.04)" stroke="rgba(245, 158, 11, 0.4)" stroke-width="2" stroke-dasharray="3,3" rx="8" />
-          <!-- Body -->
-          <rect x="${objX - 6}" y="${objY + 20}" width="12" height="50" fill="#f97316" rx="3" />
-          <rect x="${objX - 6}" y="${objY + 20}" width="12" height="15" fill="#ea580c" rx="1" />
-          <line x1="${objX}" y1="${objY + 20}" x2="${objX}" y2="${objY + 10}" stroke="#fcd34d" stroke-width="2" />
-          <!-- Animated Flame -->
-          <path d="M ${objX},${objY + 12} Q ${objX - 6},${objY + 4} ${objX},${objY - 8} Q ${objX + 6},${objY + 4} ${objX},${objY + 12}" fill="#f59e0b" class="glow-effect" />
-          <path d="M ${objX},${objY + 10} Q ${objX - 3},${objY + 5} ${objX},${objY - 3} Q ${objX + 3},${objY + 5} ${objX},${objY + 10}" fill="#f87171" />
-          <text x="${objX - 25}" y="${objY - 12}" fill="#f59e0b" class="text-[9px] font-black">${t.candleLabel}</text>
-        </g>
-
-        <!-- Dynamic trace paths -->
-        ${rayTracingHTML}
-
-        <!-- Output Image candle drawing -->
-        ${!isInfinity ? `
-          <g opacity="0.85">
-            <!-- Scaling dimensions according to physical ratios -->
-            <rect x="${imgX - Math.abs(6 * (imgHeight / objHeight))}" y="${imgY - (imgHeight > 0 ? 0 : Math.abs(imgHeight * 5/7))}" width="${Math.abs(12 * (imgHeight / objHeight))}" height="${Math.abs(imgHeight * 5/7)}" fill="#a855f7" rx="2" />
-            <path d="M ${imgX},${imgY - (imgHeight > 0 ? -imgHeight : imgHeight)} Q ${imgX - Math.abs(6 * (imgHeight / objHeight))},${imgY - imgHeight + (imgHeight > 0 ? 10 : -10)} ${imgX},${imgY - imgHeight} Q ${imgX + Math.abs(6 * (imgHeight / objHeight))},${imgY - imgHeight + (imgHeight > 0 ? 10 : -10)} ${imgX},${imgY - (imgHeight > 0 ? -imgHeight : imgHeight)}" fill="#f59e0b" />
-            <line x1="${imgX}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="2,2" />
-            <text x="${imgX - 30}" y="${imgY - (imgHeight > 0 ? -imgHeight - 15 : imgHeight - 15)}" fill="#a855f7" class="text-[9px] font-black">${t.imageLabel}</text>
-          </g>
-        ` : ''}
+        <!-- Interactive Drag Handle Outline -->
+        <rect x="${objX - 25}" y="${objY - 25}" width="50" height="${objHeight + 35}" fill="rgba(245, 158, 11, 0.03)" stroke="rgba(245, 158, 11, 0.25)" stroke-width="1.5" stroke-dasharray="3,3" rx="8" />
       `;
+
+      // Render Object Candle (Always upright)
+      svgContent += drawCandle(objX, objHeight, false, t.candleLabel);
+
+      // --- MATHEMATICALLY ACCURATE RAY TRACING ENGINE ---
+      if (currentLensType === 'convex') {
+        if (isInfinity) {
+          // Parallel outgoing rays
+          svgContent += `
+            <!-- Ray 1 (Parallel -> F) -->
+            <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+            <line x1="${ox}" y1="${objY}" x2="800" y2="${oy + (800 - ox) * (objHeight / lensFocal)}" stroke="#10b981" stroke-width="2.5" />
+
+            <!-- Ray 2 (Optical Center) -->
+            <line x1="${objX}" y1="${objY}" x2="800" y2="${oy + (800 - ox) * (objHeight / u)}" stroke="#ec4899" stroke-width="2.5" />
+          `;
+        } else {
+          const slopeRay1 = objHeight / lensFocal;
+          const endRay1Y = oy + (800 - (ox + lensFocal)) * slopeRay1;
+          const slopeRay2 = objHeight / u;
+          const endRay2Y = oy + (800 - ox) * slopeRay2;
+
+          if (v > 0) {
+            // Convex Real Image (Inverted, below axis)
+            svgContent += `
+              <!-- Ray 1 (Parallel) -->
+              <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+              <line x1="${ox}" y1="${objY}" x2="${ox + lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="2.5" />
+              <line x1="${ox + lensFocal}" y1="${oy}" x2="800" y2="${endRay1Y}" stroke="#10b981" stroke-width="2.5" />
+
+              <!-- Ray 2 (Optical Center - perfectly collinear) -->
+              <line x1="${objX}" y1="${objY}" x2="800" y2="${endRay2Y}" stroke="#ec4899" stroke-width="2.5" />
+
+              <!-- Formed Image -->
+              ${drawCandle(imgX, imgHeight, true, t.imageLabel + " (" + t.real + ", " + t.inverted + ")")}
+            `;
+          } else {
+            // Convex Virtual Image (Upright, above axis)
+            svgContent += `
+              <!-- Ray 1 (Parallel) -->
+              <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+              <line x1="${ox}" y1="${objY}" x2="800" y2="${oy + (800 - (ox + lensFocal)) * (objHeight / lensFocal)}" stroke="#10b981" stroke-width="2.5" />
+              <!-- Ray 1 Virtual Back-projection (Dashed) -->
+              <line x1="${ox}" y1="${objY}" x2="${imgX}" y2="${imgY}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
+
+              <!-- Ray 2 (Optical Center) -->
+              <line x1="${ox}" y1="${oy}" x2="800" y2="${oy + (800 - ox) * (objHeight / u)}" stroke="#ec4899" stroke-width="2.5" />
+              <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${oy}" stroke="#ec4899" stroke-width="2.5" />
+              <!-- Ray 2 Virtual Back-projection (Dashed) -->
+              <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4,4" />
+
+              <!-- Formed Image -->
+              ${drawCandle(imgX, imgHeight, true, t.imageLabel + " (" + t.virtual + ", " + t.upright + ")")}
+            `;
+          }
+        }
+      } else {
+        // Concave diverging lens (Always Virtual, Upright image)
+        const slopeRay1 = -objHeight / lensFocal;
+        const endRay1Y = objY + (800 - ox) * slopeRay1;
+        const endRay2Y = oy + (800 - ox) * (objHeight / u);
+
+        svgContent += `
+          <!-- Ray 1 (Parallel) -->
+          <line x1="${objX}" y1="${objY}" x2="${ox}" y2="${objY}" stroke="#10b981" stroke-width="2.5" />
+          <line x1="${ox}" y1="${objY}" x2="800" y2="${endRay1Y}" stroke="#10b981" stroke-width="2.5" />
+          <!-- Ray 1 Divergent Back-projection (Dashed to left focus) -->
+          <line x1="${ox}" y1="${objY}" x2="${ox - lensFocal}" y2="${oy}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" />
+
+          <!-- Ray 2 (Optical Center - collinear) -->
+          <line x1="${objX}" y1="${objY}" x2="800" y2="${endRay2Y}" stroke="#ec4899" stroke-width="2.5" />
+          <!-- Ray 2 Back projection -->
+          <line x1="${ox}" y1="${oy}" x2="${imgX}" y2="${imgY}" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4,4" />
+
+          <!-- Formed Image -->
+          ${drawCandle(imgX, imgHeight, true, t.imageLabel + " (" + t.virtual + ", " + t.upright + ")")}
+        `;
+      }
+
+      svg.innerHTML = svgContent;
     }
 
-    // Touch and drag interactive handlers for Candle (Updated to dynamically handle scaled SVGs)
+    // Touch and drag interactive handlers for Candle
     const lensSvg = document.getElementById('lens-svg');
     lensSvg.addEventListener('mousedown', startDrag);
     lensSvg.addEventListener('mousemove', drag);
@@ -1167,14 +1177,12 @@
       const rect = lensSvg.getBoundingClientRect();
       const relativeX = clientX - rect.left;
       
-      // Calculate responsive SVG coordinates (Base view width is 800)
       const scaleX = 800 / rect.width;
       const svgX = relativeX * scaleX;
       
       const ox = 400;
       const currentObjX = ox - lensObjectDist;
 
-      // Adjust collision zone for thumb sizes (increased to 50 on smaller screens)
       if (Math.abs(svgX - currentObjX) < 50) {
         isDragging = true;
       }
@@ -1190,7 +1198,6 @@
       const rect = lensSvg.getBoundingClientRect();
       const relativeX = clientX - rect.left;
       
-      // Calculate responsive coordinates
       const scaleX = 800 / rect.width;
       const svgX = relativeX * scaleX;
       
@@ -1283,7 +1290,7 @@
           <polygon points="80,314 76,308 84,308" fill="#ea580c" />
           <text x="40" y="325" fill="#ea580c" class="text-[9px] font-black">${t.finalImage} (Virtual)</text>
 
-          <!-- Observer's Eye vector graphic -->
+          <!-- Observer's Eye -->
           <g transform="translate(510, 200)">
             <path d="M 0,0 Q 15,-15 30,0 Q 15,15 0,0 Z" fill="none" stroke="#ffffff" stroke-width="2" />
             <circle cx="15" cy="0" r="5" fill="#38bdf8" />
